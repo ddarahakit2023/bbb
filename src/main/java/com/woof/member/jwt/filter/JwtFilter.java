@@ -1,6 +1,6 @@
 package com.woof.member.jwt.filter;
 
-import com.woof.jwt.utils.TokenProvider;
+import com.woof.member.jwt.utils.TokenProvider;
 import com.woof.member.model.Member;
 import com.woof.member.service.MemberService;
 import lombok.RequiredArgsConstructor;

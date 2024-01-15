@@ -1,8 +1,5 @@
 package com.woof.member.config;
 
-
-import com.woof.jwt.filter.JwtFilter;
-import com.woof.jwt.utils.TokenProvider;
 import com.woof.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
