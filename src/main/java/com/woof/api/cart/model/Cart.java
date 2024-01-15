@@ -1,8 +1,8 @@
 package com.woof.api.cart.model;
 
 
-import com.example.Woof_2nd.productCeo.model.ProductCeo;
-import com.example.demo.member.model.Member;
+import com.woof.api.member.model.Member;
+import com.woof.api.productCeo.model.ProductCeo;
 import lombok.*;
 
 import javax.persistence.*;

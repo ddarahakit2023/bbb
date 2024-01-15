@@ -1,7 +1,8 @@
 package com.woof.api.cart.repository;
 
-import com.example.Woof_2nd.cart.model.Cart;
-import com.example.demo.member.model.Member;
+
+import com.woof.api.cart.model.Cart;
+import com.woof.api.member.model.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
