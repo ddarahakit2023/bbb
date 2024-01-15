@@ -1,4 +1,4 @@
-package com.woof.cart.repository;
+package com.woof.api.cart.repository;
 
 import com.example.Woof_2nd.cart.model.Cart;
 import com.example.demo.member.model.Member;

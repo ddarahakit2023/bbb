@@ -1,4 +1,4 @@
-package com.woof.cart.controller;
+package com.woof.api.cart.controller;
 
 import com.example.Woof_2nd.cart.model.dto.CartCreateReq;
 import com.example.Woof_2nd.cart.service.CartService;

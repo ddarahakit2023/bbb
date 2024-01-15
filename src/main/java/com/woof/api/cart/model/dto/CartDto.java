@@ -1,4 +1,4 @@
-package com.woof.cart.model.dto;
+package com.woof.api.cart.model.dto;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,12 +1,12 @@
-package com.woof.cart.service;
+package com.woof.api.cart.service;
 
-import com.example.Woof_2nd.cart.model.Cart;
-import com.example.Woof_2nd.cart.model.dto.CartCreateReq;
-import com.example.Woof_2nd.cart.model.dto.CartDto;
-import com.example.Woof_2nd.cart.model.dto.CartListRes;
-import com.example.Woof_2nd.cart.repository.CartRepository;
-import com.example.Woof_2nd.productCeo.model.ProductCeo;
-import com.example.demo.member.model.Member;
+
+import com.woof.api.cart.model.Cart;
+import com.woof.api.cart.model.dto.CartCreateReq;
+import com.woof.api.cart.model.dto.CartDto;
+import com.woof.api.cart.model.dto.CartListRes;
+import com.woof.api.cart.repository.CartRepository;
+import com.woof.api.member.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

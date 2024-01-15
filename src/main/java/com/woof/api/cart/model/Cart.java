@@ -1,4 +1,4 @@
-package com.woof.cart.model;
+package com.woof.api.cart.model;
 
 
 import com.example.Woof_2nd.productCeo.model.ProductCeo;
