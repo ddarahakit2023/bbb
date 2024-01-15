@@ -25,7 +25,7 @@ public class PaymentService {
         System.out.println(payment_response.getResponse());
     }
 
-    public Boolean firstSubscribeValidation(String impUid) throws IamportResponseException, IOException {
+    public Boolean subscribeValidation(String impUid) throws IamportResponseException, IOException {
         IamportResponse<Payment> response = iamportClient.paymentByImpUid(impUid);
 
         Integer amount = response.getResponse().getAmount().intValue();
