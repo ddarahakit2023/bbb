@@ -1,4 +1,4 @@
-package com.woof.member.model.responsedto;
+package com.woof.api.member.model.responsedto;
 
 import lombok.*;
 

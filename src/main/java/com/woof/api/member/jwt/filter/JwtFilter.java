@@ -1,8 +1,8 @@
-package com.woof.member.jwt.filter;
+package com.woof.api.member.jwt.filter;
 
-import com.woof.member.jwt.utils.TokenProvider;
-import com.woof.member.model.Member;
-import com.woof.member.service.MemberService;
+import com.woof.api.member.jwt.utils.TokenProvider;
+import com.woof.api.member.model.Member;
+import com.woof.api.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

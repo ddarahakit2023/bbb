@@ -1,10 +1,10 @@
-package com.woof.member.service;
+package com.woof.api.member.service;
 
-import com.woof.jwt.utils.TokenProvider;
-import com.woof.member.model.EmailVerify;
-import com.woof.member.model.Member;
-import com.woof.member.repository.EmailVerifyRepository;
-import com.woof.member.repository.MemberRepository;
+import com.woof.api.member.jwt.utils.TokenProvider;
+import com.woof.api.member.model.EmailVerify;
+import com.woof.api.member.model.Member;
+import com.woof.api.member.repository.EmailVerifyRepository;
+import com.woof.api.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

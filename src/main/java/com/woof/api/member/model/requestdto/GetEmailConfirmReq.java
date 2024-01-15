@@ -1,4 +1,4 @@
-package com.woof.member.model.requestdto;
+package com.woof.api.member.model.requestdto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,11 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class PostMemberReq {
+@AllArgsConstructor
+public class GetEmailConfirmReq {
 
     private String email;
-    private String password;
-    private String nickname;
+    private String jwt;
+    private String uuid;
 }

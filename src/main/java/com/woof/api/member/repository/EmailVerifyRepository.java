@@ -1,6 +1,6 @@
-package com.woof.member.repository;
+package com.woof.api.member.repository;
 
-import com.woof.member.model.EmailVerify;
+import com.woof.api.member.model.EmailVerify;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

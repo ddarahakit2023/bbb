@@ -1,10 +1,10 @@
-package com.woof.member.controller;
+package com.woof.api.member.controller;
 
-import com.woof.member.model.requestdto.GetEmailConfirmReq;
-import com.woof.member.model.requestdto.PostMemberReq;
-import com.woof.member.model.responsedto.PostMemberRes;
-import com.woof.member.service.EmailVerifyService;
-import com.woof.member.service.MemberService;
+import com.woof.api.member.model.requestdto.GetEmailConfirmReq;
+import com.woof.api.member.model.requestdto.PostMemberReq;
+import com.woof.api.member.model.responsedto.PostMemberRes;
+import com.woof.api.member.service.MemberService;
+import com.woof.api.member.service.EmailVerifyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
-
 @RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor

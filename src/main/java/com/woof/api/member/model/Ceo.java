@@ -1,4 +1,4 @@
-package com.woof.member.model;
+package com.woof.api.member.model;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
