@@ -38,9 +38,9 @@ public class Orders { //예약어 때문에 orders로 했어용
     @JoinColumn(name = "Product_idx")
     private ProductCeo productCeo;
 
-    //상세아이디 1 : 주문 N
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = )
+//    //상세아이디 1 : 주문 N
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = )
 
 
 
