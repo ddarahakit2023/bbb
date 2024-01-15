@@ -1,10 +1,13 @@
 package com.woof.api.member.controller;
 
-import com.woof.api.member.model.requestdto.GetEmailConfirmReq;
-import com.woof.api.member.model.requestdto.PostMemberReq;
-import com.woof.api.member.model.responsedto.PostMemberRes;
-import com.woof.api.member.service.MemberService;
-import com.woof.api.member.service.EmailVerifyService;
+import com.woof.model.requestdto.GetEmailConfirmReq;
+import com.woof.model.requestdto.PostCeoSignupReq;
+import com.woof.model.requestdto.PostMemberSignupReq;
+import com.woof.model.responsedto.PostCeoSignupRes;
+import com.woof.model.responsedto.PostMemberSignupRes;
+import com.woof.service.CeoService;
+import com.woof.service.EmailVerifyService;
+import com.woof.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,30 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
+
 @RestController
-@RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
     private final EmailVerifyService emailVerifyService;
+    private final CeoService ceoService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/signup")
-    // client에게 요청한 정보 받아오기
-    public ResponseEntity signup (@RequestBody PostMemberReq postMemberReq){
-//        if(!memberService.getCheckEmail(getEmailConfirmReq)){
-//            return null;
-//        } else {
-
-        PostMemberRes response = memberService.signup(postMemberReq);
-
-        // 이메일 송신
-        emailVerifyService.sendMail(postMemberReq.getEmail());
-
-
-
+    @RequestMapping(method = RequestMethod.POST, value = "/member/signup")
+    public ResponseEntity signup (@RequestBody PostMemberSignupReq postMemberSignupReq){
+        PostMemberSignupRes response = memberService.signup(postMemberSignupReq);
+        emailVerifyService.sendMail(postMemberSignupReq.getEmail());
         return ResponseEntity.ok().body(response);
-//        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/ceo/signup")
+    public ResponseEntity signup (@RequestBody PostCeoSignupReq postCeoSignupReq){
+        PostCeoSignupRes response = ceoService.signup(postCeoSignupReq);
+        emailVerifyService.sendMail(postCeoSignupReq.getEmail());
+        return ResponseEntity.ok().body(response);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/confirm")

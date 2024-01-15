@@ -1,10 +1,10 @@
 package com.woof.api.member.service;
 
-import com.woof.api.member.jwt.utils.TokenProvider;
-import com.woof.api.member.model.EmailVerify;
-import com.woof.api.member.model.Member;
-import com.woof.api.member.repository.EmailVerifyRepository;
-import com.woof.api.member.repository.MemberRepository;
+import com.woof.jwt.utils.TokenProvider;
+import com.woof.model.EmailVerify;
+import com.woof.model.Member;
+import com.woof.repository.EmailVerifyRepository;
+import com.woof.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -38,7 +38,7 @@ public class EmailVerifyService {
             if(emailVerify.getUuid().equals(uuid)) {
                 Optional<Member> member = memberRepository.findByEmail(email);
                 if (member.isPresent()) {
-                    member.get().setStatus(1);
+                    member.get().setStatus(1L);
                     memberRepository.save(member.get());
                     return true;
                 }
@@ -68,7 +68,7 @@ public class EmailVerifyService {
         create(email,uuid);
         // jwt 생성
         String jwt = TokenProvider.generateAccessToken(email, tokenProvider.getSecretKey(), tokenProvider.getExpiredTimeMs());
-        message.setText("http://localhost:8080/member/confirm?email=" + email + "&uuid=" + uuid + "&jwt=" + jwt);
+        message.setText("http://localhost:8080/confirm?email=" + email + "&uuid=" + uuid + "&jwt=" + jwt);
         emailSender.send(message);
     }
 
@@ -76,7 +76,7 @@ public class EmailVerifyService {
         Optional<Member> result = memberRepository.findByEmail(email);
         if (result.isPresent()) {
             Member member = result.get();
-            member.setStatus(1);
+            member.setStatus(1L);
             memberRepository.save(member);
         }
     }

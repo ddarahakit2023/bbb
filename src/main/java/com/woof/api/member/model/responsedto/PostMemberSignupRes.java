@@ -9,11 +9,11 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PostMemberRes {
+public class PostMemberSignupRes {
     private Boolean isSuccess;
-    private Integer code;
+    private Long code;
     private String message;
-    private Map<String, Integer> result;
+    private Map<String, Long> result;
     private Boolean success;
 
 }

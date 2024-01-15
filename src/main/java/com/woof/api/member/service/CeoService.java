@@ -1,10 +1,10 @@
 package com.woof.api.member.service;
 
-import com.woof.model.Member;
+import com.woof.model.Ceo;
 import com.woof.model.requestdto.GetEmailConfirmReq;
-import com.woof.model.requestdto.PostMemberSignupReq;
-import com.woof.model.responsedto.PostMemberSignupRes;
-import com.woof.repository.MemberRepository;
+import com.woof.model.requestdto.PostCeoSignupReq;
+import com.woof.model.responsedto.PostCeoSignupRes;
+import com.woof.repository.CeoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,17 +18,13 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor        // 생성자 주입을 임의의 코드없이 자동으로 설정해주는 어노테이션
-public class MemberService implements UserDetailsService {
-    private final MemberRepository memberRepository;
+public class CeoService implements UserDetailsService {
+    private final CeoRepository ceoRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Member getMemberByEmail (String email){
-        return memberRepository.findByEmail(email).get();
+    public Ceo getMemberByEmail (String email){
+        return ceoRepository.findByEmail(email).get();
     }
-
-
-
-
 
     // Member CRUD
 
@@ -36,25 +32,25 @@ public class MemberService implements UserDetailsService {
 
     // client에게 repository에 저장할 정보를 요청
     // 응답으로 반환
-    public PostMemberSignupRes signup(PostMemberSignupReq postMemberSignupReq){
+    public PostCeoSignupRes signup(PostCeoSignupReq postCeoSignupReq){
         // 멤버 정보를 빌드로 저장
-        Member member = Member.builder()
-                .email(postMemberSignupReq.getEmail())
-                .password(passwordEncoder.encode(postMemberSignupReq.getPassword()))
-                .nickname(postMemberSignupReq.getNickname())
-                .authority("ROLE_USER")
+        Ceo ceo = Ceo.builder()
+                .email(postCeoSignupReq.getEmail())
+                .password(passwordEncoder.encode(postCeoSignupReq.getPassword()))
+                .nickname(postCeoSignupReq.getNickname())
+                .authority("ROLE_CEO")
                 .status(0L)
                 .build();
 
         // 레포지토리에 저장 -> id 생성
-        memberRepository.save(member);
+        ceoRepository.save(ceo);
 
         Map<String, Long> result = new HashMap<>();
-        result.put("idx", member.getIdx());
-        result.put("status", member.getStatus());
+        result.put("idx", ceo.getIdx());
+        result.put("status", ceo.getStatus());
 
         // 응답 형식
-        PostMemberSignupRes postMemberSignupRes = PostMemberSignupRes.builder()
+        PostCeoSignupRes postCeoSignupRes = PostCeoSignupRes.builder()
                 .isSuccess(true)
                 .code(1000L)
                 .message("요청 성공.")
@@ -62,11 +58,11 @@ public class MemberService implements UserDetailsService {
                 .success(true)
                 .build();
 
-        return postMemberSignupRes;
+        return postCeoSignupRes;
     }
 
     public Boolean getCheckEmail (GetEmailConfirmReq getEmailConfirmReq) {
-        Optional<Member> result = memberRepository.findByEmail(getEmailConfirmReq.getEmail());
+        Optional<Ceo> result = ceoRepository.findByEmail(getEmailConfirmReq.getEmail());
         // 레포지토리에 존재하지 않는다면 true 반환
         if (!result.isPresent()) {
             return true;
