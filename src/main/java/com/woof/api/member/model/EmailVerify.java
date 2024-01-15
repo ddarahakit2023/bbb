@@ -19,7 +19,7 @@ public class EmailVerify {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long id;
+    private Long idx;
 
     private String email;
     private String uuid;
