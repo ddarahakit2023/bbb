@@ -13,7 +13,7 @@ imp:
 spring:
   mail:
     host: ${MAIL_HOST}
-    port: ${MAIL_PORT}}
+    port: ${MAIL_PORT}
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
     properties:
