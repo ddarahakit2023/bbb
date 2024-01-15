@@ -1,6 +1,6 @@
 package com.woof.api.member.repository;
 
-import com.woof.model.Member;
+import com.woof.api.member.model.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

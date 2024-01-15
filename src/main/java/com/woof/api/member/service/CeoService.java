@@ -1,10 +1,10 @@
 package com.woof.api.member.service;
 
-import com.woof.model.Ceo;
-import com.woof.model.requestdto.GetEmailConfirmReq;
-import com.woof.model.requestdto.PostCeoSignupReq;
-import com.woof.model.responsedto.PostCeoSignupRes;
-import com.woof.repository.CeoRepository;
+import com.woof.api.member.model.Ceo;
+import com.woof.api.member.model.requestdto.GetEmailConfirmReq;
+import com.woof.api.member.model.requestdto.PostCeoSignupReq;
+import com.woof.api.member.model.responsedto.PostCeoSignupRes;
+import com.woof.api.member.repository.CeoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
