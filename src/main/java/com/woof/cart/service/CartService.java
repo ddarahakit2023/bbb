@@ -22,7 +22,7 @@ public class CartService {
 
     private final CartRepository cartRepository;
 
-    public void create(Member member, CartCreateReq cartCreateReq){
+    public void create(Member member, CartCreateReq cartCreateReq) {
 
 
         // CartRepository를 사용하여 새로운 Cart 엔티티를 데이터베이스에 저장
@@ -35,7 +35,7 @@ public class CartService {
     }
 
     // 즐겨찾기 목록 조회
-    public CartListRes list(Member member){
+    public CartListRes list(Member member) {
 
         // 레포지토리에서 멤버의 카트 목록을 가져옴
         List<Cart> cartList = cartRepository.findAllByMember(member);
@@ -63,7 +63,7 @@ public class CartService {
     }
 
     @Transactional
-    public void remove(Member member, Long idx){
+    public void remove(Member member, Long idx) {
         // CartRepository를 사용하여 id 및 관련 멤버로 즐겨찾기 삭제
         cartRepository.deleteByIdAndMember(idx, member);
     }
