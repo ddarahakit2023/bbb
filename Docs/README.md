@@ -1,9 +1,11 @@
-<h1 align="center">주제 👍</h1>
+<h1 align="center">
+반려동물 케어 서비스
+
+Woof </h1>
 
 
 <div align="center">
-  <img src="./img/pic1.png"  style="zoom:76%;" align="center"/>
-</div>
+<img src="main.png" width="600" height="600"/>
 
 
 
@@ -30,7 +32,7 @@ Woof는 사용자 주변 반려동물 업체의 정보를 제공하고 예약 �
 ```
 
 ## 프로젝트 설계
-![SystemArchitecture.png](SystemArchitecture.png)
+<img src="SystemArchitecture.png" width="600" height="600"/>
 
 
 ## 🔍 요구사항 명세서
@@ -106,12 +108,14 @@ swagger-ui
 
 ## 🤼‍♂️팀원
 
-Team Leader : 🐯**홍길동**
+**👍팀장 : 심준보**
 
-Backend : 🐶 **김철수**
+**👽️팀원 : 강문혜**
 
-Backend : 🐺 **박철수**
+**✨️팀원 : 강지흔**
 
-Frontend : 🐱 **이철수**
+**💚️팀원 : 김주연**
 
-인공지능 : 🦁 **최철수**
+**🙂️팀원 : 김지은**
+
+**🚀️팀원 : 이창훈**
