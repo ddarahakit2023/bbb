@@ -19,10 +19,10 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long idx;
 
     @Builder
-    public Product (Integer id){
-        this.id = id;
+    public Product (Long id){
+        this.idx = idx;
     }
 }

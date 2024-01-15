@@ -19,7 +19,7 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long idx;
     private String username;
     private String text;
     private Integer productNumber;
@@ -29,8 +29,8 @@ public class Review {
      Product product;
 
     @Builder
-    public Review(Integer id, String username, String text, Product product, Integer productNumber){
-        this.id = id;
+    public Review(Long idx, String username, String text, Product product, Integer productNumber){
+        this.idx = idx;
         this.username = username;
         this.text = text;
         this.product = product;

@@ -1,11 +1,10 @@
 package com.woof.api.review.service;
 
 
-import com.example.demo.review.model.Review;
-
-import com.example.demo.review.model.dto.ReviewDto;
-import com.example.demo.review.repository.ProductRepository;
-import com.example.demo.review.repository.ReviewRepository;
+import com.woof.api.review.model.Review;
+import com.woof.api.review.model.dto.ReviewDto;
+import com.woof.api.review.repository.ProductRepository;
+import com.woof.api.review.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,7 +20,7 @@ public class ReviewService {
         this.productRepository = productRepository;
     }
 
-    public Integer create(ReviewDto reviewDto) {
+    public Long create(ReviewDto reviewDto) {
         Review review = Review.builder()
                 .username(reviewDto.getUsername())
                 .text(reviewDto.getText())
@@ -29,22 +28,22 @@ public class ReviewService {
                 .build();
 
         Review savedReview = reviewRepository.save(review);
-        return savedReview.getId();
+        return savedReview.getIdx();
     }
 
-    public ReviewDto read(Integer id) {
-        Review review = reviewRepository.findById(id).orElseThrow(()->new ReviewNotFoundException(""));
+    public ReviewDto read(Long idx) {
+        Review review = reviewRepository.findById(idx).orElseThrow(()->new ReviewNotFoundException(""));
 
         return ReviewDto.builder()
-                .id(review.getId())
+                .idx(review.getIdx())
                 .text(review.getText())
                 .username(review.getUsername())
                 .productNumber(review.getProductNumber())
                 .build();
     }
 
-    public void update(Integer id, ReviewDto reviewDto) {
-        Optional<Review> result = reviewRepository.findById(id);
+    public void update(Long idx, ReviewDto reviewDto) {
+        Optional<Review> result = reviewRepository.findById(idx);
         if(result.isPresent()) {
             Review review = result.get();
             review.setText(reviewDto.getText());
@@ -53,7 +52,7 @@ public class ReviewService {
 
     }
 
-    public void delete(Integer id) {
-        reviewRepository.delete(Review.builder().id(id).build());
+    public void delete(Long idx) {
+        reviewRepository.delete(Review.builder().idx(idx).build());
     }
 }
