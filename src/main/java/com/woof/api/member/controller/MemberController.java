@@ -100,8 +100,8 @@ public class MemberController {
         return ResponseEntity.badRequest().body("에러");
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/test/ceo")
-    public String testCeo() {
+    @RequestMapping(method = RequestMethod.GET, value = "/test/manager")
+    public String testManager() {
         return "성공";
     }
 
