@@ -1,6 +1,9 @@
 package com.woof.api.orders.model;
 
 
+import com.woof.api.member.model.Ceo;
+import com.woof.api.member.model.Member;
+import com.woof.api.payment.model.Payment;
 import lombok.*;
 
 import javax.persistence.*;
