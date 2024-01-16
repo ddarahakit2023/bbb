@@ -7,11 +7,9 @@ import lombok.Data;
 @Data
 public class ProductCeoReadRes {
     private Long idx;
-//    private Long id;
     private String productName;
     private String storeName;
     private Integer phoneNumber;
-//    Integer brandIdx;
     private Integer price;
     private String filename;
     private String contents;

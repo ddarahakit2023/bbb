@@ -38,13 +38,10 @@ public class ProductCeoService {
     private String bucket;
 
 
-    public ProductCeo createCeo(
-//            Member member,
-                             ProductCeoCreateReq productCeoCreateReq) {
+    public ProductCeo createCeo(ProductCeoCreateReq productCeoCreateReq) {
 
         return productCeoRepository.save(ProductCeo.builder()
                 .storeName(productCeoCreateReq.getStoreName())
-//                .brandIdx(member)
                 .productName(productCeoCreateReq.getProductName())
                 .phoneNumber(productCeoCreateReq.getPhoneNumber())
                 .price(productCeoCreateReq.getPrice())
@@ -75,7 +72,6 @@ public class ProductCeoService {
                     .phoneNumber(productCeo.getPhoneNumber())
                     .price(productCeo.getPrice())
                     .contents(productCeo.getContents())
-//                    .brandIdx(productManager.getBrandIdx().getIdx())
                     .filename(filenames)
                     .build();
 
@@ -115,7 +111,6 @@ public class ProductCeoService {
                     .phoneNumber(productCeo.getPhoneNumber())
                     .price(productCeo.getPrice())
                     .contents(productCeo.getContents())
-//                    .brandIdx(productManager.getBrandIdx().getIdx())
                     .filename(filenames)
                     .build();
 
@@ -140,6 +135,7 @@ public class ProductCeoService {
             productCeo.setStoreName(productCeoUpdateReq.getStoreName());
             productCeo.setProductName(productCeoUpdateReq.getProductName());
             productCeo.setPrice(productCeoUpdateReq.getPrice());
+            productCeo.setPhoneNumber(productCeoUpdateReq.getPhoneNumber());
             productCeo.setContents(productCeoUpdateReq.getContents());
 
             productCeoRepository.save(productCeo);
@@ -164,10 +160,8 @@ public class ProductCeoService {
         String folderPath = makeFolderCeo();
         String uuid = UUID.randomUUID().toString();
         String saveFileName = folderPath + File.separator + uuid + "_" + originalName;
-//        File saveFile = new File(uploadPath, saveFileName);
         InputStream input = null;
         try {
-//            file.transferTo(saveFile);
             input = file.getInputStream();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());
