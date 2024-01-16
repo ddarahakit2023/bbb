@@ -1,10 +1,12 @@
 package com.woof.api.orders.model;
 
-import com.woof.member.ceo.model.response.PostCreateCeoRes;
-import com.woof.productCeo.model.ProductCeo;
+
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @AllArgsConstructor
@@ -28,19 +30,19 @@ public class Orders { //예약어 때문에 orders로 했어용
 //    private String woof_manager_number;
 
 
-    //사용자 1 : 주문 N
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Member_idx")
-    private PostCreateCeoRes postCreateCeoRes;
+//    //사용자 1 : 주문 N
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "Member_idx")
+//    private Ceo ceo;
+//
+//    //상품 1 : 주문 N
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "Product_idx")
+//    private ProductCeo productCeo;
 
-    //상품 1 : 주문 N
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Product_idx")
-    private ProductCeo productCeo;
-
-    //상세아이디 1 : 주문 N
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = )
+//    //상세아이디 1 : 주문 N
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = )
 
 
 
