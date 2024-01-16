@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor        // 생성자 주입을 임의의 코드없이 자동으로 설정해주는 어노테이션
+@RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
@@ -29,9 +29,6 @@ public class MemberService implements UserDetailsService {
     // Member CRUD
 
     // create
-
-    // client에게 repository에 저장할 정보를 요청
-    // 응답으로 반환
     public PostMemberSignupRes signup(PostMemberSignupReq postMemberSignupReq){
         // 멤버 정보를 빌드로 저장
         Member member = Member.builder()
@@ -69,7 +66,14 @@ public class MemberService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        System.out.println(username);
+        Optional<Member> result = memberRepository.findByEmail(username);
+        Member member = null;
+        if(result.isPresent()) {
+            member = result.get();
+        }
+
+        return member;
     }
 
     // read

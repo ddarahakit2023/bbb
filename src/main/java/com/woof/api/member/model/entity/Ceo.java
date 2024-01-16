@@ -17,14 +17,15 @@ import java.util.Collections;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Member implements UserDetails {
+public class Ceo implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     private String email;
     private String password;
-    private String nickname;
+    private Long businessnum;
+    private String ceoname;
     private String authority;
     private boolean status;
 
