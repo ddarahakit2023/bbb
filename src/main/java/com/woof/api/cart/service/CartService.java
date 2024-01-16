@@ -25,7 +25,8 @@ public class CartService {
     private final CartRepository cartRepository;
     private final MemberRepository memberRepository;
 
-    // 즐겨찾기 추가
+    // TODO: 에러코드 수정
+    // 즐겨찾기 추가 기능
     public Response cartIn(Long productCeoIdx, Long productManagerIdx, String email) {
 
 
@@ -35,6 +36,7 @@ public class CartService {
             Cart cart = cartRepository.save(Cart.builder()
                     .productCeo(ProductCeo.builder().idx(productCeoIdx).build())
                     .productManager(ProductManager.builder().idx(productManagerIdx).build())
+                    .member(member.get())
                     .build());
 
             return Response.success("추가 성공");
@@ -43,22 +45,25 @@ public class CartService {
         }
     }
     // 즐겨찾기 목록 조회
-    public Response list (String email) {
+    public Response cartList (String email) {
 
         Optional<Member> member = memberRepository.findByEmail(email);
 
 
         if (member.isPresent()) {
             List<Cart> carts = cartRepository.findAllByMember(Member.builder().idx(member.get().getIdx()).build());
-
             List<CartDto> cartList = new ArrayList<>();
+
             for (Cart cart : carts) {
+
                 ProductCeo productCeo = cart.getProductCeo();
+                ProductManager productManager = cart.getProductManager();
+
                 cartList.add(CartDto.builder()
                         .idx(cart.getIdx())
-                        .productCeoName(cart.getProductCeo().getStoreName())// 업체명
-                        .filename(cart.getProductCeo().getProductCeoImages().get(0).getFilename())// 업체 사진
-                        .productManagerName(cart.getProductManager().getManagerName())// 매니저 이름
+                        .productCeoName(productCeo.getStoreName())// 업체명
+                        //.filename(cart.getProductCeo().getProductCeoImages().get(0).getFilename())// 업체 사진
+                        .productManagerName(productManager.getManagerName())// 매니저 이름
                         .build());
 
             }
@@ -77,10 +82,10 @@ public class CartService {
 //                .build();
 
 
-        @Transactional
-        public Response remove (Long idx, Member member) {
+       // @Transactional
+        public Response cartRemove (Long idx) {
             // CartRepository를 사용하여 id 및 관련 멤버로 즐겨찾기 삭제
-            cartRepository.deleteByIdxAndMember(idx ,member);
+            cartRepository.deleteByMemberIdx(idx);
 
             return Response.success("삭제 성공");
         }

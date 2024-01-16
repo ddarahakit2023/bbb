@@ -19,17 +19,18 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idx;
 
+
     // 즐겨찾기 : 멤버 = N : 1
     @ManyToOne
-    @JoinColumn(name = "Member_idx")
+    @JoinColumn(name = "member_idx")
     private Member member;
     // 즐겨찾기 : 업체 = N : 1
     @ManyToOne
-    @JoinColumn(name = "ProductCeo_idx")
+    @JoinColumn(name = "productCeo_idx")
     private ProductCeo productCeo;
     // 즐겨찾기 : 매니저 = N : 1
     @ManyToOne
-    @JoinColumn(name = "ProductManager_idx")
+    @JoinColumn(name = "productManager_idx")
     private ProductManager productManager;
 
 
