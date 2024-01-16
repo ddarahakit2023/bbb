@@ -36,6 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
+        Long idx = TokenProvider.getIdx(token);
         String username = TokenProvider.getUsername(token);
         String role = TokenProvider.getRole(token);
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
@@ -51,7 +52,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                Member.builder().email(username).build(), null,
+                Member.builder().idx(idx).email(username).build(), null,
                 authorities
         );
 

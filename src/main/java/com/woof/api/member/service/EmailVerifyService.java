@@ -52,7 +52,7 @@ public class EmailVerifyService {
 
     }
 
-    public void sendMail (String email, String role){
+    public void sendMail (Long idx, String email, String role){
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
@@ -61,7 +61,7 @@ public class EmailVerifyService {
         String uuid = UUID.randomUUID().toString();
         create(email,uuid);
         // jwt 생성
-        String jwt = TokenProvider.generateAccessToken(email, role);
+        String jwt = TokenProvider.generateAccessToken(idx, email, role);
         message.setText("http://localhost:8080/confirm?email=" + email + "&uuid=" + uuid + "&jwt=" + jwt);
         emailSender.send(message);
     }

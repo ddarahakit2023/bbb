@@ -39,8 +39,9 @@ public class TokenProvider {
     }
 
     // 토큰 생성
-    public static String generateAccessToken(String username, String role) {
+    public static String generateAccessToken(Long idx, String username, String role) {
         Claims claims = Jwts.claims();
+        claims.put("idx", idx);
         claims.put("username", username);
         claims.put("role", role);
 
@@ -73,7 +74,11 @@ public class TokenProvider {
         return claims;
     }
 
-    // Claims 객체에서 username을 뽑아서 리턴하는 메소드
+    public static Long getIdx(String token) {
+        Long idx = getClaims(token).get("idx", Long.class);
+
+        return idx;
+    }
     public static String getUsername(String token) {
         String username = getClaims(token).get("username", String.class);
 

@@ -35,7 +35,7 @@ public class MemberController {
     @RequestMapping(method = RequestMethod.POST, value = "/member/signup")
     public ResponseEntity signup (@RequestBody PostMemberSignupReq postMemberSignupReq){
         PostMemberSignupRes response = memberService.signup(postMemberSignupReq);
-        emailVerifyService.sendMail(postMemberSignupReq.getEmail(), "ROLE_MEMBER");
+        emailVerifyService.sendMail(response.getResult().get("idx"), postMemberSignupReq.getEmail(), "ROLE_MEMBER");
         return ResponseEntity.ok().body(response);
     }
 
@@ -45,7 +45,7 @@ public class MemberController {
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         if(authentication.getPrincipal() != null) {
             Member member = (Member)authentication.getPrincipal();
-            return ResponseEntity.ok().body(PostMemberLoginRes.builder().accessToken(TokenProvider.generateAccessToken(member.getUsername(), "ROLE_MEMBER")).build());
+            return ResponseEntity.ok().body(PostMemberLoginRes.builder().accessToken(TokenProvider.generateAccessToken(member.getIdx(), member.getUsername(), "ROLE_MEMBER")).build());
 
         }
 
@@ -55,7 +55,7 @@ public class MemberController {
     @RequestMapping(method = RequestMethod.POST, value = "/ceo/signup")
     public ResponseEntity signup (@RequestBody PostCeoSignupReq postCeoSignupReq){
         PostCeoSignupRes response = ceoService.signup(postCeoSignupReq);
-        emailVerifyService.sendMail(postCeoSignupReq.getEmail(), "ROLE_CEO");
+        emailVerifyService.sendMail(response.getResult().get("idx"), postCeoSignupReq.getEmail(), "ROLE_CEO");
         return ResponseEntity.ok().body(response);
     }
 
@@ -65,7 +65,7 @@ public class MemberController {
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         if(authentication.getPrincipal() != null) {
             Ceo ceo = (Ceo)authentication.getPrincipal();
-            return ResponseEntity.ok().body(PostMemberLoginRes.builder().accessToken(TokenProvider.generateAccessToken(ceo.getUsername(), "ROLE_CEO")).build());
+            return ResponseEntity.ok().body(PostMemberLoginRes.builder().accessToken(TokenProvider.generateAccessToken(ceo.getIdx(), ceo.getUsername(), "ROLE_CEO")).build());
 
         }
 
