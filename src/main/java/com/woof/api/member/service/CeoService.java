@@ -1,6 +1,7 @@
 package com.woof.api.member.service;
 
 import com.woof.api.member.model.Ceo;
+import com.woof.api.member.model.Member;
 import com.woof.api.member.model.requestdto.GetEmailConfirmReq;
 import com.woof.api.member.model.requestdto.PostCeoSignupReq;
 import com.woof.api.member.model.responsedto.PostCeoSignupRes;
@@ -39,7 +40,7 @@ public class CeoService implements UserDetailsService {
                 .password(passwordEncoder.encode(postCeoSignupReq.getPassword()))
                 .nickname(postCeoSignupReq.getNickname())
                 .authority("ROLE_CEO")
-                .status(0L)
+                .status(false)
                 .build();
 
         // 레포지토리에 저장 -> id 생성
@@ -47,7 +48,6 @@ public class CeoService implements UserDetailsService {
 
         Map<String, Long> result = new HashMap<>();
         result.put("idx", ceo.getIdx());
-        result.put("status", ceo.getStatus());
 
         // 응답 형식
         PostCeoSignupRes postCeoSignupRes = PostCeoSignupRes.builder()
@@ -73,7 +73,14 @@ public class CeoService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        System.out.println(username);
+        Optional<Ceo> result = ceoRepository.findByEmail(username);
+        Ceo ceo = null;
+        if(result.isPresent()) {
+            ceo = result.get();
+        }
+
+        return ceo;
     }
 
     // read

@@ -26,7 +26,7 @@ public class ProductCeo {
 //    private List<Order> orders = new ArrayList<>();           주문이랑 합칠 때 활성화
 
 
-    @OneToMany(mappedBy = "productCeo")
+    @OneToMany(mappedBy = "productCeo", fetch = FetchType.EAGER)
     private List<ProductCeoImage> productCeoImages = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "review")
