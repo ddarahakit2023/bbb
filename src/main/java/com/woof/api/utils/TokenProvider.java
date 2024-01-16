@@ -14,16 +14,17 @@ import java.util.Date;
 @Component
 @Getter
 public class TokenProvider {
-    private final String secretKey;
-    private final Integer expiredTimeMs;
+    @Value("${jwt.secret-key}")
+    private static String secretKey;
+    @Value("${jwt.token.expired-time-ms}")
+    private static Integer expiredTimeMs;
 
     public TokenProvider(@Value("${jwt.secret-key}") String secretKey, @Value("${jwt.token.expired-time-ms}") Integer expiredTimeMs) {
         this.secretKey = secretKey;
         this.expiredTimeMs = expiredTimeMs;
     }
 
-    // 토큰 생성
-    public static String generateAccessToken(String username, String key, int expiredTimeMs) {
+    public static String generateCeoAccessToken(String username) {
         Claims claims = Jwts.claims();
         claims.put("username", username);
 
@@ -31,13 +32,29 @@ public class TokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiredTimeMs))
-                .signWith(getSignKey(key), SignatureAlgorithm.HS256)
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
 
         return token;
     }
 
-    public static Key getSignKey(String secretKey) {
+    // 토큰 생성
+    public static String generateAccessToken(String username, String role) {
+        Claims claims = Jwts.claims();
+        claims.put("username", username);
+        claims.put("role", role);
+
+        String token = Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expiredTimeMs))
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
+                .compact();
+
+        return token;
+    }
+
+    public static Key getSignKey() {
 
         return Keys.hmacShaKeyFor(secretKey.getBytes());
 
@@ -45,10 +62,10 @@ public class TokenProvider {
 
 
     // 토큰에 담겨있는 정보를 이용해서 Claims 객체를 리턴하는 메소드
-    public static Claims getClaims(String token, String key) {
+    public static Claims getClaims(String token) {
 
         Claims claims = Jwts.parserBuilder()
-                .setSigningKey(getSignKey(key))
+                .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -57,17 +74,22 @@ public class TokenProvider {
     }
 
     // Claims 객체에서 username을 뽑아서 리턴하는 메소드
-    public static String getUsername(String token, String key) {
-        String username = getClaims(token, key).get("username", String.class);
+    public static String getUsername(String token) {
+        String username = getClaims(token).get("username", String.class);
 
         return username;
     }
+    public static String getRole(String token) {
+        String role = getClaims(token).get("role", String.class);
+
+        return role;
+    }
 
     // 유효한 토큰인지 검증
-    public static Boolean validate(String token, String username, String key) {
-        String usernameByToken = getUsername(token, key);
+    public static Boolean validate(String token, String username) {
+        String usernameByToken = getUsername(token);
 
-        Date expireTime = getClaims(token, key).getExpiration();
+        Date expireTime = getClaims(token).getExpiration();
         // 현재 시간 이전이 만료 시간이다. -> true
         Boolean result = expireTime.before(new Date(System.currentTimeMillis()));
 

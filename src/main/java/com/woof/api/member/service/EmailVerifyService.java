@@ -35,12 +35,7 @@ public class EmailVerifyService {
             // uuid 인증 이메일에 적혀진 uuid
             // jwt는 db에 저장하지 않기 때문에 비교불가
             if(emailVerify.getUuid().equals(uuid)) {
-                Optional<Member> member = memberRepository.findByEmail(email);
-                if (member.isPresent()) {
-                    member.get().setStatus(1L);
-                    memberRepository.save(member.get());
-                    return true;
-                }
+                return true;
             }
         }
         return false;
@@ -57,7 +52,7 @@ public class EmailVerifyService {
 
     }
 
-    public void sendMail (String email){
+    public void sendMail (String email, String role){
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
@@ -66,7 +61,7 @@ public class EmailVerifyService {
         String uuid = UUID.randomUUID().toString();
         create(email,uuid);
         // jwt 생성
-        String jwt = TokenProvider.generateAccessToken(email, tokenProvider.getSecretKey(), tokenProvider.getExpiredTimeMs());
+        String jwt = TokenProvider.generateAccessToken(email, role);
         message.setText("http://localhost:8080/confirm?email=" + email + "&uuid=" + uuid + "&jwt=" + jwt);
         emailSender.send(message);
     }
@@ -75,7 +70,7 @@ public class EmailVerifyService {
         Optional<Member> result = memberRepository.findByEmail(email);
         if (result.isPresent()) {
             Member member = result.get();
-            member.setStatus(1L);
+            member.setStatus(true);
             memberRepository.save(member);
         }
     }
