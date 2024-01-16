@@ -12,6 +12,7 @@ import com.woof.api.productManager.model.ProductManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -76,7 +77,7 @@ public class CartService {
 //                .build();
 
 
-        // @Transactional
+        @Transactional
         public Response remove (Long idx, Member member) {
             // CartRepository를 사용하여 id 및 관련 멤버로 즐겨찾기 삭제
             cartRepository.deleteByIdxAndMember(idx ,member);
