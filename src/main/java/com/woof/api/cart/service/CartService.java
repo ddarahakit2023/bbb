@@ -6,7 +6,7 @@ import com.woof.api.cart.model.dto.CartCreateReq;
 import com.woof.api.cart.model.dto.CartDto;
 import com.woof.api.cart.model.dto.CartListRes;
 import com.woof.api.cart.repository.CartRepository;
-import com.woof.api.member.model.Member;
+import com.woof.api.member.model.entity.Member;
 import com.woof.api.productCeo.model.ProductCeo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

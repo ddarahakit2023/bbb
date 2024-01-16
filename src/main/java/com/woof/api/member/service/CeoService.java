@@ -1,7 +1,6 @@
 package com.woof.api.member.service;
 
-import com.woof.api.member.model.Ceo;
-import com.woof.api.member.model.Member;
+import com.woof.api.member.model.entity.Ceo;
 import com.woof.api.member.model.requestdto.GetEmailConfirmReq;
 import com.woof.api.member.model.requestdto.PostCeoSignupReq;
 import com.woof.api.member.model.responsedto.PostCeoSignupRes;
@@ -23,7 +22,7 @@ public class CeoService implements UserDetailsService {
     private final CeoRepository ceoRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Ceo getMemberByEmail (String email){
+    public Ceo getMemberByEmail(String email) {
         return ceoRepository.findByEmail(email).get();
     }
 
@@ -33,7 +32,7 @@ public class CeoService implements UserDetailsService {
 
     // client에게 repository에 저장할 정보를 요청
     // 응답으로 반환
-    public PostCeoSignupRes signup(PostCeoSignupReq postCeoSignupReq){
+    public PostCeoSignupRes signup(PostCeoSignupReq postCeoSignupReq) {
         // 멤버 정보를 빌드로 저장
         Ceo ceo = Ceo.builder()
                 .email(postCeoSignupReq.getEmail())
@@ -61,7 +60,7 @@ public class CeoService implements UserDetailsService {
         return postCeoSignupRes;
     }
 
-    public Boolean getCheckEmail (GetEmailConfirmReq getEmailConfirmReq) {
+    public Boolean getCheckEmail(GetEmailConfirmReq getEmailConfirmReq) {
         Optional<Ceo> result = ceoRepository.findByEmail(getEmailConfirmReq.getEmail());
         // 레포지토리에 존재하지 않는다면 true 반환
         if (!result.isPresent()) {
@@ -73,17 +72,6 @@ public class CeoService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println(username);
-        Optional<Ceo> result = ceoRepository.findByEmail(username);
-        Ceo ceo = null;
-        if(result.isPresent()) {
-            ceo = result.get();
-        }
-
-        return ceo;
+        return null;
     }
-
-    // read
-
-
 }

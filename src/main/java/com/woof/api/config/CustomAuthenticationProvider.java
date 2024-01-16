@@ -1,7 +1,7 @@
 package com.woof.api.config;
 
-import com.woof.api.member.model.Ceo;
-import com.woof.api.member.model.Member;
+import com.woof.api.member.model.entity.Ceo;
+import com.woof.api.member.model.entity.Member;
 import com.woof.api.member.service.CeoService;
 import com.woof.api.member.service.MemberService;
 import lombok.RequiredArgsConstructor;

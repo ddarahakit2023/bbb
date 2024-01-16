@@ -1,7 +1,7 @@
 package com.woof.api.cart.model;
 
 
-import com.woof.api.member.model.Member;
+import com.woof.api.member.model.entity.Member;
 import com.woof.api.productCeo.model.ProductCeo;
 import lombok.*;
 

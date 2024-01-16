@@ -1,6 +1,6 @@
 package com.woof.api.productManager.controller;
 
-//import com.woof.api.member.model.Member;
+//import com.woof.api.member.model.entity.Member;
 import com.woof.api.productManager.model.ProductManager;
 import com.woof.api.productManager.model.dto.ProductManagerCreateReq;
 import com.woof.api.productManager.model.dto.ProductManagerCreateRes;
