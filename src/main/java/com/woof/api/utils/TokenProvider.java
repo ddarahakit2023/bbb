@@ -1,4 +1,4 @@
-package com.woof.api.member.jwt.utils;
+package com.woof.api.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

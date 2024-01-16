@@ -5,10 +5,8 @@ import com.woof.api.orders.model.dto.OrdersListRes;
 import com.woof.api.orders.model.dto.OrdersReadRes;
 import com.woof.api.orders.model.dto.OrdersReadRes2;
 import com.woof.api.orders.repository.OrderRepository;
-import com.woof.member.ceo.model.response.PostCreateCeoRes;
-import com.woof.productCeo.model.ProductCeo;
-import com.woof.productCeo.model.dto.ProductCeoReadRes;
 import com.woof.api.orders.model.Orders;
+import com.woof.api.productCeo.model.ProductCeo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +23,7 @@ public class OrderService {
         orderRepository.save(Orders.builder()
                 .productCeo(ProductCeo.builder().idx(productid).build())
 
-                .postCreateCeoRes(PostCreateCeoRes.builder().idx(memberid).build())
+//                .postCreateCeoRes(PostCreateCeoRes.builder().idx(memberid).build())
 
                 .phoneNumber(orders.getPhoneNumber())
                 .time(orders.getTime())
@@ -41,21 +39,21 @@ public class OrderService {
 
         for (Orders orders:result) {
             ProductCeo productCeo = orders.getProductCeo();
-            PostCreateCeoRes createCeoRes = orders.getPostCreateCeoRes();
+//            PostCreateCeoRes createCeoRes = orders.getPostCreateCeoRes();
 
             List<OrdersReadRes> ordersReadRes = new ArrayList<>();
-
-            ProductCeoReadRes productCeoReadRes = ProductCeoReadRes.builder()
-                    .idx(productCeo.getIdx())
-                    .storeName(productCeo.getStoreName())
-                    .price(productCeo.getPrice())
-                    .build();
-
-            PostCreateCeoRes postCreateCeoRes = PostCreateCeoRes.builder()
-                    .idx(createCeoRes.getIdx())
-                    .ceoname(createCeoRes.getCeoname())
-                    .email(createCeoRes.getEmail())
-                    .build();
+//
+//            ProductCeoReadRes productCeoReadRes = ProductCeoReadRes.builder()
+//                    .idx(productCeo.getIdx())
+//                    .storeName(productCeo.getStoreName())
+//                    .price(productCeo.getPrice())
+//                    .build();
+//
+//            PostCreateCeoRes postCreateCeoRes = PostCreateCeoRes.builder()
+//                    .idx(createCeoRes.getIdx())
+//                    .ceoname(createCeoRes.getCeoname())
+//                    .email(createCeoRes.getEmail())
+//                    .build();
 
             OrdersReadRes ordersReadRes1 = OrdersReadRes.builder()
                     .idx(orders.getIdx())
@@ -94,15 +92,15 @@ public class OrderService {
 //                    .build();
 
 
-            ProductCeo productCeo = ProductCeo.builder()
-                    .idx(productCeo.getIdx())
-                    .productName(productCeo.getStoreName())
-                    .storeName(productCeo.getStoreName())
-                    .phoneNumber(productCeo.getPhoneNumber())
-                    .price(productCeo.getPrice())
-                    .contents(productCeo.getContents())
-                    .filename(filenames)
-                    .build();
+//            ProductCeo productCeo = ProductCeo.builder()
+//                    .idx(productCeo.getIdx())
+//                    .productName(productCeo.getStoreName())
+//                    .storeName(productCeo.getStoreName())
+//                    .phoneNumber(productCeo.getPhoneNumber())
+//                    .price(productCeo.getPrice())
+//                    .contents(productCeo.getContents())
+//                    .filename(filenames)
+//                    .build();
 
             OrdersReadRes ordersReadRes = OrdersReadRes.builder()
                     .idx(orders.getIdx())

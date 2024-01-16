@@ -8,7 +8,7 @@ import lombok.Data;
 public class CartDto {
     Long idx;
     Long productCeoIdx;
-    Integer brandIdx;
+    Long brandIdx;
     String name;
     String filename;
 }

@@ -1,7 +1,7 @@
-package com.woof.api.member.config;
+package com.woof.api.config;
 
-import com.woof.api.member.jwt.filter.JwtFilter;
-import com.woof.api.member.jwt.utils.TokenProvider;
+import com.woof.api.config.filter.JwtFilter;
+import com.woof.api.utils.TokenProvider;
 import com.woof.api.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +32,8 @@ public class SecurityConfig {
         try {
             http.csrf().disable()
                     .authorizeRequests()
+//                    .antMatchers("**").permitAll()
+                    .antMatchers("/v2/api-docs/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
                     .antMatchers("/member/*").permitAll()
                     .antMatchers("/ceo/*").permitAll()
                     .antMatchers("/member/authenticate").hasRole("USER")
@@ -40,9 +42,7 @@ public class SecurityConfig {
 
             http.addFilterBefore(new JwtFilter(memberService, tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
-            http.formLogin()
-                    .loginProcessingUrl("/member/login")
-                    .defaultSuccessUrl("/member/mypage");
+            http.formLogin().disable();
 
             return http.build();
 

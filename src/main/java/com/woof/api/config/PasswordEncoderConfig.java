@@ -1,4 +1,4 @@
-package com.woof.api.member.config;
+package com.woof.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

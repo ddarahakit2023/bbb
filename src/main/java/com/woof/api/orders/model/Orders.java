@@ -1,7 +1,7 @@
 package com.woof.api.orders.model;
 
-import com.woof.member.ceo.model.response.PostCreateCeoRes;
-import com.woof.productCeo.model.ProductCeo;
+
+import com.woof.api.productCeo.model.ProductCeo;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,11 +27,11 @@ public class Orders { //예약어 때문에 orders로 했어용
 //    private String user_id;
 //    private String woof_manager_number;
 
-
-    //사용자 1 : 주문 N
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Member_idx")
-    private PostCreateCeoRes postCreateCeoRes;
+//
+//    //사용자 1 : 주문 N
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "Member_idx")
+//    private PostCreateCeoRes postCreateCeoRes;
 
     //상품 1 : 주문 N
     @ManyToOne(fetch = FetchType.LAZY)

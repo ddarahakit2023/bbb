@@ -1,6 +1,6 @@
 package com.woof.api.member.service;
 
-import com.woof.api.member.jwt.utils.TokenProvider;
+import com.woof.api.utils.TokenProvider;
 import com.woof.api.member.model.EmailVerify;
 import com.woof.api.member.model.Member;
 import com.woof.api.member.repository.EmailVerifyRepository;

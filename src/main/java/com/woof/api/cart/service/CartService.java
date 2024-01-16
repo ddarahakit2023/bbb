@@ -47,7 +47,7 @@ public class CartService {
             CartDto dto = CartDto.builder()
                     .idx(cart.getId())
                     .name(cart.getProductCeo().getStoreName())// 업체명
-                    .brandIdx(cart.getMember().getId())     // 사용자 id
+                    .brandIdx(cart.getMember().getIdx())     // 사용자 id
                     .filename(cart.getProductCeo().getProductCeoImages().get(0).getFilename())// 업체 사진
                     .build();
             cartDtos.add(dto);

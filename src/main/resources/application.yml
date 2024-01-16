@@ -11,6 +11,9 @@ imp:
 
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   mail:
     host: ${MAIL_HOST}
     port: ${MAIL_PORT}
@@ -57,3 +60,8 @@ cloud:
       auto: false
     stack:
       auto: false
+
+
+logging:
+  level:
+    org.springframework.security: DEBUG
