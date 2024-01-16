@@ -3,14 +3,8 @@ package com.woof.api.member.controller;
 import com.woof.api.member.model.entity.Manager;
 import com.woof.api.member.model.entity.Member;
 import com.woof.api.member.model.requestdto.*;
-import com.woof.api.member.model.responsedto.PostManagerLoginRes;
-import com.woof.api.member.model.responsedto.PostManagerSignupRes;
-import com.woof.api.member.model.responsedto.PostMemberLoginRes;
-import com.woof.api.member.model.responsedto.PostMemberSignupRes;
-import com.woof.api.member.service.ManagerService;
-import com.woof.api.member.service.ManagerEmailVerifyService;
-import com.woof.api.member.service.MemberEmailVerifyService;
-import com.woof.api.member.service.MemberService;
+import com.woof.api.member.model.responsedto.*;
+import com.woof.api.member.service.*;
 import com.woof.api.utils.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +23,7 @@ public class MemberController {
 
     private final ManagerService managerService;
     private final MemberService memberService;
+    private final CeoService ceoService;
     private final ManagerEmailVerifyService managerEmailVerifyService;
     private final MemberEmailVerifyService memberEmailVerifyService;
     private final AuthenticationManager authenticationManager;
@@ -44,6 +39,12 @@ public class MemberController {
     public ResponseEntity signup (@RequestBody PostManagerSignupReq postManagerSignupReq){
         PostManagerSignupRes response = managerService.signup(postManagerSignupReq);
         managerEmailVerifyService.sendManagerMail(postManagerSignupReq.getEmail(), "ROLE_MANAGER");
+        return ResponseEntity.ok().body(response);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/ceo/signup")
+    public ResponseEntity signup (@RequestBody PostCeoSignupReq postCeoSignupReq){
+        PostCeoSignupRes response = ceoService.signup(postCeoSignupReq);
         return ResponseEntity.ok().body(response);
     }
 
