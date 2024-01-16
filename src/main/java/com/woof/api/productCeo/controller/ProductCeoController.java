@@ -54,7 +54,7 @@ public class ProductCeoController {
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/updateCeo")
-    public ResponseEntity updateCeo(ProductCeoUpdateReq productCeoUpdateReq) {
+    public ResponseEntity updateCeo(@RequestBody ProductCeoUpdateReq productCeoUpdateReq) {
         productCeoService.updateCeo(productCeoUpdateReq);
 
         return ResponseEntity.ok().body("수정");

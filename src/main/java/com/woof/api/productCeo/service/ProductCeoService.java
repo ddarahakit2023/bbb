@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -142,7 +143,27 @@ public class ProductCeoService {
         }
     }
 
+    @Transactional
     public void deleteCeo(Long idx) {
+//        productCeoImageRepository.delete(ProductCeoImage.builder().idx(idx).build());
+        List<ProductCeoImage> all = productCeoImageRepository.findAllByProductCeoIdx(idx);
+        List<ProductCeoImage> aa = new ArrayList<>();
+        for (ProductCeoImage productCeoImage : all) {
+            ProductCeoImage result = ProductCeoImage.builder()
+                    .idx(productCeoImage.getIdx())
+                    .build();
+            aa.add(result);
+        }
+
+        for (ProductCeoImage productCeoImage : aa) {
+            productCeoImageRepository.delete(productCeoImage);
+        }
+
+
+
+
+//        productCeoRepository.delete(result);
+//
         productCeoRepository.delete(ProductCeo.builder().idx(idx).build());
     }
 
