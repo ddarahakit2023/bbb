@@ -17,7 +17,7 @@ import java.util.Collections;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Ceo implements UserDetails {
+public class Manager implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

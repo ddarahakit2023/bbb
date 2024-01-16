@@ -1,8 +1,8 @@
 package com.woof.api.config;
 
-import com.woof.api.member.model.entity.Ceo;
+import com.woof.api.member.model.entity.Manager;
 import com.woof.api.member.model.entity.Member;
-import com.woof.api.member.service.CeoService;
+import com.woof.api.member.service.ManagerService;
 import com.woof.api.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    private final CeoService ceoService;
+    private final ManagerService managerService;
 
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
@@ -29,8 +29,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 
         UserDetails userDetails;
-        if (username.startsWith("ceo_")) {
-            userDetails = (Ceo) ceoService.loadUserByUsername(username.substring(4,username.length()));
+        if (username.startsWith("manager_")) {
+            userDetails = (Manager) managerService.loadUserByUsername(username.substring(8,username.length()));
         } else {
             userDetails = (Member) memberService.loadUserByUsername(username);
         }

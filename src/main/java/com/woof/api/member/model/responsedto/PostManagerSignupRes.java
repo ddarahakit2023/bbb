@@ -9,7 +9,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PostCeoSignupRes {
+public class PostManagerSignupRes {
     private Boolean isSuccess;
     private Long code;
     private String message;

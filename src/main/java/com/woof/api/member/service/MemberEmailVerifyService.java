@@ -18,7 +18,6 @@ import java.util.UUID;
 public class MemberEmailVerifyService {
 
     private final MemberEmailVerifyRepository memberEmailVerifyRepository;
-    private final TokenProvider tokenProvider;
     private final JavaMailSender emailSender;
     private final MemberRepository memberRepository;
     public Boolean confirm(String email, String uuid){
@@ -54,7 +53,7 @@ public class MemberEmailVerifyService {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
-        message.setSubject("[Member] 이메일 인증");
+        message.setSubject("[Member] woof 이메일 인증");
         // uuid 생성
         String uuid = UUID.randomUUID().toString();
         create(email,uuid);

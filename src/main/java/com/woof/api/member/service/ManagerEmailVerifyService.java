@@ -1,10 +1,10 @@
 package com.woof.api.member.service;
 
-import com.woof.api.member.model.entity.Ceo;
-import com.woof.api.member.repository.CeoRepository;
+import com.woof.api.member.model.entity.Manager;
+import com.woof.api.member.repository.ManagerRepository;
 import com.woof.api.utils.TokenProvider;
 import com.woof.api.member.model.entity.EmailVerify;
-import com.woof.api.member.repository.CeoEmailVerifyRepository;
+import com.woof.api.member.repository.ManagerEmailVerifyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,24 +15,23 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CeoEmailVerifyService {
+public class ManagerEmailVerifyService {
 
-    private final CeoEmailVerifyRepository ceoEmailVerifyRepository;
-    private final TokenProvider tokenProvider;
+    private final ManagerEmailVerifyRepository managerEmailVerifyRepository;
     private final JavaMailSender emailSender;
-    private final CeoRepository ceoRepository;
+    private final ManagerRepository managerRepository;
 
     public Boolean confirm(String email, String uuid){
-        Optional<EmailVerify> result = ceoEmailVerifyRepository.findByEmail(email);
+        Optional<EmailVerify> result = managerEmailVerifyRepository.findByEmail(email);
 
         if(result.isPresent()) {
             EmailVerify emailVerify = result.get();
 
             if(emailVerify.getUuid().equals(uuid)) {
-                Optional<Ceo> ceo = ceoRepository.findByEmail(email);
-                if (ceo.isPresent()) {
-                    ceo.get().setStatus(true);
-                    ceoRepository.save(ceo.get());
+                Optional<Manager> manager = managerRepository.findByEmail(email);
+                if (manager.isPresent()) {
+                    manager.get().setStatus(true);
+                    managerRepository.save(manager.get());
                     return true;
                 }
             }
@@ -46,30 +45,30 @@ public class CeoEmailVerifyService {
                 .uuid(uuid)
                 .build();
 
-        ceoEmailVerifyRepository.save(emailVerify);
+        managerEmailVerifyRepository.save(emailVerify);
 
     }
 
-    public void sendCeoMail (String email, String role){
+    public void sendManagerMail (String email, String role){
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
-        message.setSubject("[CEO] 이메일 인증");
+        message.setSubject("[MANAGER] woof 이메일 인증");
         // uuid 생성
         String uuid = UUID.randomUUID().toString();
         create(email,uuid);
         // jwt 생성
         String jwt = TokenProvider.generateAccessToken(email,role);
-        message.setText("http://localhost:8080/ceoconfirm?email=" + email + "&uuid=" + uuid + "&jwt=" + jwt);
+        message.setText("http://localhost:8080/managerconfirm?email=" + email + "&uuid=" + uuid + "&jwt=" + jwt);
         emailSender.send(message);
     }
 
     public void update(String email) {
-        Optional<Ceo> result = ceoRepository.findByEmail(email);
+        Optional<Manager> result = managerRepository.findByEmail(email);
         if (result.isPresent()) {
-            Ceo ceo = result.get();
-            ceo.setStatus(true);
-            ceoRepository.save(ceo);
+            Manager manager = result.get();
+            manager.setStatus(true);
+            managerRepository.save(manager);
         }
     }
 }

@@ -1,12 +1,12 @@
 package com.woof.api.member.controller;
 
 import com.woof.api.member.model.requestdto.GetEmailConfirmReq;
-import com.woof.api.member.model.requestdto.PostCeoSignupReq;
+import com.woof.api.member.model.requestdto.PostManagerSignupReq;
 import com.woof.api.member.model.requestdto.PostMemberSignupReq;
-import com.woof.api.member.model.responsedto.PostCeoSignupRes;
+import com.woof.api.member.model.responsedto.PostManagerSignupRes;
 import com.woof.api.member.model.responsedto.PostMemberSignupRes;
-import com.woof.api.member.service.CeoService;
-import com.woof.api.member.service.CeoEmailVerifyService;
+import com.woof.api.member.service.ManagerService;
+import com.woof.api.member.service.ManagerEmailVerifyService;
 import com.woof.api.member.service.MemberEmailVerifyService;
 import com.woof.api.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +21,9 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final CeoService ceoService;
+    private final ManagerService managerService;
     private final MemberService memberService;
-    private final CeoEmailVerifyService ceoEmailVerifyService;
+    private final ManagerEmailVerifyService managerEmailVerifyService;
     private final MemberEmailVerifyService memberEmailVerifyService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/member/signup")
@@ -33,18 +33,18 @@ public class MemberController {
         return ResponseEntity.ok().body(response);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/ceo/signup")
-    public ResponseEntity signup (@RequestBody PostCeoSignupReq postCeoSignupReq){
-        PostCeoSignupRes response = ceoService.signup(postCeoSignupReq);
-        ceoEmailVerifyService.sendCeoMail(postCeoSignupReq.getEmail(), "ROLE_CEO");
+    @RequestMapping(method = RequestMethod.POST, value = "/manager/signup")
+    public ResponseEntity signup (@RequestBody PostManagerSignupReq postManagerSignupReq){
+        PostManagerSignupRes response = managerService.signup(postManagerSignupReq);
+        managerEmailVerifyService.sendManagerMail(postManagerSignupReq.getEmail(), "ROLE_MANAGER");
         return ResponseEntity.ok().body(response);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/ceoconfirm")
-    public RedirectView ceoConfirm(GetEmailConfirmReq getEmailConfirmReq) {
+    @RequestMapping(method = RequestMethod.GET, value = "/memberconfirm")
+    public RedirectView memberConfirm(GetEmailConfirmReq getEmailConfirmReq) {
 
-        if (ceoEmailVerifyService.confirm(getEmailConfirmReq.getEmail(), getEmailConfirmReq.getUuid())) {
-            ceoEmailVerifyService.update(getEmailConfirmReq.getEmail());
+        if (memberEmailVerifyService.confirm(getEmailConfirmReq.getEmail(), getEmailConfirmReq.getUuid())) {
+            memberEmailVerifyService.update(getEmailConfirmReq.getEmail());
 
             return new RedirectView("http://localhost:3000/emailconfirm/" + getEmailConfirmReq.getJwt());
         } else {
@@ -53,11 +53,11 @@ public class MemberController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/memberconfirm")
-    public RedirectView memberConfirm(GetEmailConfirmReq getEmailConfirmReq) {
+    @RequestMapping(method = RequestMethod.GET, value = "/managerconfirm")
+    public RedirectView managerConfirm(GetEmailConfirmReq getEmailConfirmReq) {
 
-        if (memberEmailVerifyService.confirm(getEmailConfirmReq.getEmail(), getEmailConfirmReq.getUuid())) {
-            memberEmailVerifyService.update(getEmailConfirmReq.getEmail());
+        if (managerEmailVerifyService.confirm(getEmailConfirmReq.getEmail(), getEmailConfirmReq.getUuid())) {
+            managerEmailVerifyService.update(getEmailConfirmReq.getEmail());
 
             return new RedirectView("http://localhost:3000/emailconfirm/" + getEmailConfirmReq.getJwt());
         } else {
