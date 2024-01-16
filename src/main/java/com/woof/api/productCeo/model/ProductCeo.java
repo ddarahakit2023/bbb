@@ -26,7 +26,7 @@ public class ProductCeo {
 //    private List<Order> orders = new ArrayList<>();           주문이랑 합칠 때 활성화
 
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "productCeo")
     private List<ProductCeoImage> productCeoImages = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "review")
