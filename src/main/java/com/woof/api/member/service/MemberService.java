@@ -1,10 +1,10 @@
 package com.woof.api.member.service;
 
-import com.woof.model.Member;
-import com.woof.model.requestdto.GetEmailConfirmReq;
-import com.woof.model.requestdto.PostMemberSignupReq;
-import com.woof.model.responsedto.PostMemberSignupRes;
-import com.woof.repository.MemberRepository;
+import com.woof.api.member.model.Member;
+import com.woof.api.member.model.requestdto.GetEmailConfirmReq;
+import com.woof.api.member.model.requestdto.PostMemberSignupReq;
+import com.woof.api.member.model.responsedto.PostMemberSignupRes;
+import com.woof.api.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +25,6 @@ public class MemberService implements UserDetailsService {
     public Member getMemberByEmail (String email){
         return memberRepository.findByEmail(email).get();
     }
-
 
 
 

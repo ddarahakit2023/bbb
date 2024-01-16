@@ -1,13 +1,13 @@
 package com.woof.api.member.controller;
 
-import com.woof.model.requestdto.GetEmailConfirmReq;
-import com.woof.model.requestdto.PostCeoSignupReq;
-import com.woof.model.requestdto.PostMemberSignupReq;
-import com.woof.model.responsedto.PostCeoSignupRes;
-import com.woof.model.responsedto.PostMemberSignupRes;
-import com.woof.service.CeoService;
-import com.woof.service.EmailVerifyService;
-import com.woof.service.MemberService;
+import com.woof.api.member.model.requestdto.GetEmailConfirmReq;
+import com.woof.api.member.model.requestdto.PostCeoSignupReq;
+import com.woof.api.member.model.requestdto.PostMemberSignupReq;
+import com.woof.api.member.model.responsedto.PostCeoSignupRes;
+import com.woof.api.member.model.responsedto.PostMemberSignupRes;
+import com.woof.api.member.service.CeoService;
+import com.woof.api.member.service.EmailVerifyService;
+import com.woof.api.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
