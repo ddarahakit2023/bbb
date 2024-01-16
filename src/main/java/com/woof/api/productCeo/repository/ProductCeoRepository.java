@@ -6,14 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface ProductCeoRepository extends JpaRepository<ProductCeo, Long>
-//        , ProductRepositoryCustum
-{
+public interface ProductCeoRepository extends JpaRepository<ProductCeo, Long> {
     public Optional<ProductCeo> findByProductName(String productName);
-
-
-//    @Query("SELECT p FROM ProductManager p " +
-//            "JOIN FETCH p.productManagerImages " +
-//            "JOIN FETCH p.brandIdx")
-//    public List<ProductManager> findAllQuery();
 }

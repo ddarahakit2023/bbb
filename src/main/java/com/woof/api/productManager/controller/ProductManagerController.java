@@ -1,6 +1,5 @@
 package com.woof.api.productManager.controller;
 
-//import com.woof.api.member.model.Member;
 import com.woof.api.productManager.model.ProductManager;
 import com.woof.api.productManager.model.dto.ProductManagerCreateReq;
 import com.woof.api.productManager.model.dto.ProductManagerCreateRes;
@@ -8,7 +7,6 @@ import com.woof.api.productManager.model.dto.ProductManagerCreateResult;
 import com.woof.api.productManager.model.dto.ProductManagerUpdateReq;
 import com.woof.api.productManager.service.ProductManagerService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,13 +21,9 @@ public class ProductManagerController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/createManager")
-    public ResponseEntity createManager(
-//            @AuthenticationPrincipal Member member,
-                                 @RequestPart ProductManagerCreateReq postProductReq,
-                                 @RequestPart MultipartFile[] uploadFiles) {
-        ProductManager productManager = productManagerService.createManager(
-//                member,
-                postProductReq);
+    public ResponseEntity createManager(@RequestPart ProductManagerCreateReq postProductReq,
+                                        @RequestPart MultipartFile[] uploadFiles) {
+        ProductManager productManager = productManagerService.createManager(postProductReq);
 
         for (MultipartFile uploadFile:uploadFiles) {
             String uploadPath = productManagerService.uploadFileManager(uploadFile);
@@ -58,7 +52,7 @@ public class ProductManagerController {
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/updateManager")
-    public ResponseEntity updateManager(ProductManagerUpdateReq productManagerUpdateReq) {
+    public ResponseEntity updateManager(@RequestBody ProductManagerUpdateReq productManagerUpdateReq) {
         productManagerService.updateManager(productManagerUpdateReq);
 
         return ResponseEntity.ok().body("수정");

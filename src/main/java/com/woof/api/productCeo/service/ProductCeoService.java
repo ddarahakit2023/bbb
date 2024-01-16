@@ -125,8 +125,6 @@ public class ProductCeoService {
         }
 
         return null;
-
-
     }
 
     public void updateCeo(ProductCeoUpdateReq productCeoUpdateReq) {
@@ -145,7 +143,6 @@ public class ProductCeoService {
 
     @Transactional
     public void deleteCeo(Long idx) {
-//        productCeoImageRepository.delete(ProductCeoImage.builder().idx(idx).build());
         List<ProductCeoImage> all = productCeoImageRepository.findAllByProductCeoIdx(idx);
         List<ProductCeoImage> aa = new ArrayList<>();
         for (ProductCeoImage productCeoImage : all) {
@@ -159,11 +156,6 @@ public class ProductCeoService {
             productCeoImageRepository.delete(productCeoImage);
         }
 
-
-
-
-//        productCeoRepository.delete(result);
-//
         productCeoRepository.delete(ProductCeo.builder().idx(idx).build());
     }
 
