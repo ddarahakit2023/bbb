@@ -26,7 +26,7 @@ public class ProductManager {
 //    private List<Order> orders = new ArrayList<>();           주문이랑 합칠 때 활성화
 
 
-    @OneToMany(mappedBy = "productManager")
+    @OneToMany(mappedBy = "productManager", fetch = FetchType.EAGER)
     private List<ProductManagerImage> productManagerImages = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "review")

@@ -37,13 +37,10 @@ public class ProductManagerService {
     private String bucket;
 
 
-    public ProductManager createManager(
-//            Member member,
-            ProductManagerCreateReq productManagerCreateReq) {
+    public ProductManager createManager(ProductManagerCreateReq productManagerCreateReq) {
 
         return productManagerRepository.save(ProductManager.builder()
                 .idx(productManagerCreateReq.getIdx())
-//                .brandIdx(member)
                 .gender(productManagerCreateReq.getManagerName())
                 .phoneNumber(productManagerCreateReq.getPhoneNumber())
                 .price(productManagerCreateReq.getPrice())
@@ -72,7 +69,6 @@ public class ProductManagerService {
                     .phoneNumber(productManager.getPhoneNumber())
                     .price(productManager.getPrice())
                     .contents(productManager.getContents())
-//                    .brandIdx(productManager.getBrandIdx().getIdx())
                     .filename(filenames)
                     .build();
 
@@ -112,7 +108,6 @@ public class ProductManagerService {
                     .phoneNumber(productManager.getPhoneNumber())
                     .price(productManager.getPrice())
                     .contents(productManager.getContents())
-//                    .brandIdx(productManager.getBrandIdx().getIdx())
                     .filename(filenames)
                     .build();
 
@@ -164,10 +159,8 @@ public class ProductManagerService {
         String folderPath = makeFolderManager();
         String uuid = UUID.randomUUID().toString();
         String saveFileName = folderPath + File.separator + uuid + "_" + originalName;
-//        File saveFile = new File(uploadPath, saveFileName);
         InputStream input = null;
         try {
-//            file.transferTo(saveFile);
             input = file.getInputStream();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());
