@@ -95,6 +95,12 @@ swagger-ui
 
 
 
+## API 명세서
+<p align="center">
+  <img src="https://github.com/beyond-sw-camp/be02-2nd-woof-animal_careservice/assets/148935493/b265c2ef-1383-4cf2-b507-4367107f9d9a
+">
+</p>
+
 ## 테스트 및 결과
 
 <details>
