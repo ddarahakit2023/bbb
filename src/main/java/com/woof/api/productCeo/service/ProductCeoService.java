@@ -2,7 +2,7 @@ package com.woof.api.productCeo.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-//import com.woof.api.member.model.Member;
+//import com.woof.api.member.model.entity.Member;
 import com.woof.api.productCeo.model.ProductCeo;
 import com.woof.api.productCeo.model.ProductCeoImage;
 import com.woof.api.productCeo.model.dto.ProductCeoCreateReq;

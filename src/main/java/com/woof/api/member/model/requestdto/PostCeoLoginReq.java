@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostCeoLoginReq {
-    private String email;
+    private String businessnum;
     private String password;
 }
