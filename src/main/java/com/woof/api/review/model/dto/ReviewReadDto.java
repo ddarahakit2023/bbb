@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class ReviewReadDto
 {
-    private Integer id;
+    private Long idx;
     private final String username;
     private final String text;
     private final Integer productId;

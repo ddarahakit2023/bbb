@@ -1,11 +1,10 @@
 package com.woof.api.review.service;
 
 
-import com.woof.api.review.model.Product;
+import com.woof.api.orders.model.Orders;
 import com.woof.api.review.model.Review;
 import com.woof.api.review.model.dto.ReviewDto;
 import com.woof.api.review.model.dto.ReviewResDto;
-import com.woof.api.review.repository.ProductRepository;
 import com.woof.api.review.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +26,12 @@ public class ReviewService {
                 .username(reviewDto.getUsername())
                 .text(reviewDto.getText())
                 .productNumber(reviewDto.getProductNumber())
-                .product(Product.builder()
-                        .idx(reviewDto.getProductIdx())
+                .orders(Orders.builder()
+                        .idx(reviewDto.getOrderIdx())
                         .build())
+//                .product(Product.builder()
+//                        .idx(reviewDto.getProductIdx())
+//                        .build()) //상품idx 가져온 것
                 .build();
 
         Review result = reviewRepository.save(review);
@@ -40,7 +42,7 @@ public class ReviewService {
                 .username(result.getUsername())
                 .text(result.getText())
                 .productNumber(result.getProductNumber())
-                .productIdx(result.getProduct().getIdx())
+                .orderIdx(result.getOrders().getIdx())
                 .status("리뷰가 생성되었습니다.")
                 .build();
     }
@@ -50,7 +52,7 @@ public class ReviewService {
 
         return ReviewDto.builder()
                 .idx(review.getIdx())
-                .productIdx(review.getProduct().getIdx())
+                .orderIdx(review.getOrders().getIdx())
                 .text(review.getText())
                 .username(review.getUsername())
                 .productNumber(review.getProductNumber())

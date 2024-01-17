@@ -17,4 +17,5 @@ public class ReviewResDto {
     private  Integer productNumber; // Add productNumber field
     private  String text;
     private  Long productIdx;
+    private Long orderIdx;
 }
