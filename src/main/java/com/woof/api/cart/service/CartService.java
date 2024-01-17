@@ -27,7 +27,7 @@ public class CartService {
     private final MemberRepository memberRepository;
 
     // TODO: 에러코드 수정
-    // 즐겨찾기 추가 기능
+
     public Response cartIn(Long productCeoIdx, Long productManagerIdx, String email) {
 
 
