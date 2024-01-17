@@ -1,4 +1,4 @@
-//package com.example.demo.productManager.repository.querydsl;
+package com.woof.api.productCeo.repository.querydsl;//package com.example.demo.productManager.repository.querydsl;
 //
 //import com.example.demo.productManager.model.ProductManager;
 //

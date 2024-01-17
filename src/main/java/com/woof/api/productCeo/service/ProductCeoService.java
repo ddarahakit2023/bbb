@@ -2,14 +2,9 @@ package com.woof.api.productCeo.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-//import com.woof.api.member.model.Member;
 import com.woof.api.productCeo.model.ProductCeo;
 import com.woof.api.productCeo.model.ProductCeoImage;
-import com.woof.api.productCeo.model.dto.ProductCeoCreateReq;
-import com.woof.api.productCeo.model.dto.ProductCeoListRes;
-import com.woof.api.productCeo.model.dto.ProductCeoReadRes;
-import com.woof.api.productCeo.model.dto.ProductCeoReadRes2;
-import com.woof.api.productCeo.model.dto.ProductCeoUpdateReq;
+import com.woof.api.productCeo.model.dto.*;
 import com.woof.api.productCeo.repository.ProductCeoImageRepository;
 import com.woof.api.productCeo.repository.ProductCeoRepository;
 import lombok.RequiredArgsConstructor;

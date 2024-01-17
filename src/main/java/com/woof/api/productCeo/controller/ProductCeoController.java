@@ -8,7 +8,6 @@ import com.woof.api.productCeo.model.dto.ProductCeoCreateResult;
 import com.woof.api.productCeo.model.dto.ProductCeoUpdateReq;
 import com.woof.api.productCeo.service.ProductCeoService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

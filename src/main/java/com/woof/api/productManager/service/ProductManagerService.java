@@ -48,6 +48,7 @@ public class ProductManagerService {
                 .idx(productManagerCreateReq.getIdx())
                 .gender(productManagerCreateReq.getManagerName())
                 .phoneNumber(productManagerCreateReq.getPhoneNumber())
+                .managerName(productManagerCreateReq.getManagerName())
                 .price(productManagerCreateReq.getPrice())
                 .contents(productManagerCreateReq.getContents())
                 .build());
@@ -70,6 +71,7 @@ public class ProductManagerService {
 
             ProductManagerReadRes productManagerReadRes = ProductManagerReadRes.builder()
                     .idx(productManager.getIdx())
+                    .managerName(productManager.getManagerName())
                     .gender(productManager.getGender())
                     .phoneNumber(productManager.getPhoneNumber())
                     .price(productManager.getPrice())
