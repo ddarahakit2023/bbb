@@ -28,11 +28,15 @@ Woof는 사용자 주변 반려동물 업체의 정보를 제공하고 예약 �
 ## 📌 프로젝트 목표
 
 ```sh
-어떤 어떤 기술을 활용해 어떤 걸 구현하려 했다.
+MYSQL, LINUX, JAVA, SPRING BOOT, JPA 등의 기술을 이용해
+Ceo(반려동물 업체) / Manager(직원) / Member(소비자) 이용자가 회원가입 및 로그인, 회원정보수정, 조회, 탈퇴가 가능하도록 구현하였다.
+로그인 후 Ceo와 Manager는 상품을 등록/조회/수정/삭제 할 수 있고,
+Member는 Cart기능을 통해 즐겨찾기를 할 수 있고, Orders 기능을 통해 상품을 주문 할 수 있다.
+주문을 한 사용자(Member)는 Review를 작성, 수정, 조회, 삭제가 가능할 것이다.
 ```
 
 ## 프로젝트 설계
-<img src="SystemArchitecture.png" width="600" height="600"/>
+<img src="SystemArchitecture.png" width="800" height="600"/>
 
 
 ## 🔍 요구사항 명세서
@@ -91,17 +95,24 @@ swagger-ui
 
 
 
-
 ## 테스트 및 결과
 
 <details>
-<summary>회원 정보 조회</summary>
-<div>
-<figure align="center"> 
-  <img src="z"/>
-    <p>~~~ 조회</p>
- </figure>
-</div>
+<summary>자세히 보기(클릭)</summary>
+회원 기능
+
+상품 기능
+
+리뷰 기능
+
+주문 기능
+
+카트 기능
+
+결제 기능
+
+
+
 </details>
 
 
