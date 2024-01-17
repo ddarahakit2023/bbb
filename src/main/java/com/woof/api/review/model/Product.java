@@ -22,7 +22,7 @@ public class Product {
     private Long idx;
 
     @Builder
-    public Product (Long id){
+    public Product (Long idx){
         this.idx = idx;
     }
 }
