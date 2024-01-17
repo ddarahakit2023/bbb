@@ -26,7 +26,7 @@ public class Orders { //예약어 때문에 orders로 했어용
 
     //업체 1 : 주문 N
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_idx")
+    @JoinColumn(name = "ceo_idx")
     private Ceo ceo;
 //
     //매니저 1 : 주문 N
