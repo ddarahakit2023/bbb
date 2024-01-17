@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
     public List<Cart> findAllByMember(Member member);
-    public void deleteByIdAndMember(Long id, Member member);
+    public void deleteByMemberIdx(Long idx);
     // void인 이유는 이 메소드가 어떤 결과를 반환하지 않고 삭제하는 기능이기 때문
 }

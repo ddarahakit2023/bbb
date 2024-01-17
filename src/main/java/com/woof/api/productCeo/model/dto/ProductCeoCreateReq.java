@@ -7,7 +7,6 @@ import lombok.Data;
 @Builder
 @Data
 public class ProductCeoCreateReq {
-    private Long idx;
     private String storeName;
     private String productName;
     private Integer phoneNumber;

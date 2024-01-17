@@ -38,9 +38,9 @@ public class SecurityConfig {
                     .antMatchers("/ceo/*").permitAll()
                     .antMatchers("/member/authenticate").hasRole("USER")
                     .antMatchers("/ceo/authenticate").hasRole("CEO")
-                    .anyRequest().authenticated();
+                    .anyRequest().permitAll();
 
-            http.addFilterBefore(new JwtFilter(memberService, tokenProvider), UsernamePasswordAuthenticationFilter.class);
+            http.addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
             http.formLogin().disable();
 

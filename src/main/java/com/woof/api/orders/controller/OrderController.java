@@ -1,25 +1,26 @@
 package com.woof.api.orders.controller;
 
+
 import com.woof.api.orders.model.Orders;
-import com.woof.api.orders.model.dto.OrderDto;
+import com.woof.api.orders.model.dto.OrdersReadRes2;
+import com.woof.api.orders.model.dto.OrdersUpdateReq;
 import com.woof.api.orders.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping(value = "/orders")
 public class OrderController {
     private final OrderService orderService;
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity create(Long memberid, Long productid, Orders orders){
-        orderService.create(memberid, productid, orders);
+    public ResponseEntity create(Orders orders){
+        orderService.create(orders);
 
-        return ResponseEntity.ok().body("예약 성공");
+        return ResponseEntity.ok().body("예약에 성공하였습니다");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/list")
@@ -32,18 +33,26 @@ public class OrderController {
         return ResponseEntity.ok().body(orderService.read(id));
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, value = "/update")
-    public ResponseEntity update(OrderDto orderDto){
-        orderService.update(orderDto);
 
-        return ResponseEntity.ok().body("주문 수정");
+
+    @RequestMapping(method = RequestMethod.PATCH, value = "/update")
+    public ResponseEntity<OrdersReadRes2> update(@RequestBody OrdersUpdateReq ordersUpdateReq) {
+        //ResponseEntity 반환, orderDto를 매개변수로 받아옴
+        OrdersReadRes2 result = orderService.update(ordersUpdateReq);
+        //orderService의 업데이트 메소드에 orderDto를 받아옴
+
+        return ResponseEntity.ok().body(result);
     }
 
+
+
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
-    public ResponseEntity delete(Long idx){
+    public ResponseEntity<OrdersReadRes2> delete(Long idx){
         orderService.delete(idx);
 
-        return ResponseEntity.ok().body("주문 삭제");
+        OrdersReadRes2 result2 = orderService.delete(idx);
+
+        return ResponseEntity.ok().body(result2);
     }
 
 

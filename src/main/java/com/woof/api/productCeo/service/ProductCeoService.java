@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,13 +39,10 @@ public class ProductCeoService {
     private String bucket;
 
 
-    public ProductCeo createCeo(
-//            Member member,
-                             ProductCeoCreateReq productCeoCreateReq) {
+    public ProductCeo createCeo(ProductCeoCreateReq productCeoCreateReq) {
 
         return productCeoRepository.save(ProductCeo.builder()
                 .storeName(productCeoCreateReq.getStoreName())
-//                .brandIdx(member)
                 .productName(productCeoCreateReq.getProductName())
                 .phoneNumber(productCeoCreateReq.getPhoneNumber())
                 .price(productCeoCreateReq.getPrice())
@@ -75,7 +73,6 @@ public class ProductCeoService {
                     .phoneNumber(productCeo.getPhoneNumber())
                     .price(productCeo.getPrice())
                     .contents(productCeo.getContents())
-//                    .brandIdx(productManager.getBrandIdx().getIdx())
                     .filename(filenames)
                     .build();
 
@@ -115,7 +112,6 @@ public class ProductCeoService {
                     .phoneNumber(productCeo.getPhoneNumber())
                     .price(productCeo.getPrice())
                     .contents(productCeo.getContents())
-//                    .brandIdx(productManager.getBrandIdx().getIdx())
                     .filename(filenames)
                     .build();
 
@@ -129,8 +125,6 @@ public class ProductCeoService {
         }
 
         return null;
-
-
     }
 
     public void updateCeo(ProductCeoUpdateReq productCeoUpdateReq) {
@@ -140,13 +134,28 @@ public class ProductCeoService {
             productCeo.setStoreName(productCeoUpdateReq.getStoreName());
             productCeo.setProductName(productCeoUpdateReq.getProductName());
             productCeo.setPrice(productCeoUpdateReq.getPrice());
+            productCeo.setPhoneNumber(productCeoUpdateReq.getPhoneNumber());
             productCeo.setContents(productCeoUpdateReq.getContents());
 
             productCeoRepository.save(productCeo);
         }
     }
 
+    @Transactional
     public void deleteCeo(Long idx) {
+        List<ProductCeoImage> all = productCeoImageRepository.findAllByProductCeoIdx(idx);
+        List<ProductCeoImage> aa = new ArrayList<>();
+        for (ProductCeoImage productCeoImage : all) {
+            ProductCeoImage result = ProductCeoImage.builder()
+                    .idx(productCeoImage.getIdx())
+                    .build();
+            aa.add(result);
+        }
+
+        for (ProductCeoImage productCeoImage : aa) {
+            productCeoImageRepository.delete(productCeoImage);
+        }
+
         productCeoRepository.delete(ProductCeo.builder().idx(idx).build());
     }
 
@@ -164,10 +173,8 @@ public class ProductCeoService {
         String folderPath = makeFolderCeo();
         String uuid = UUID.randomUUID().toString();
         String saveFileName = folderPath + File.separator + uuid + "_" + originalName;
-//        File saveFile = new File(uploadPath, saveFileName);
         InputStream input = null;
         try {
-//            file.transferTo(saveFile);
             input = file.getInputStream();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());

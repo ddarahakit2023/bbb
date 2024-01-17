@@ -26,7 +26,7 @@ public class Member implements UserDetails {
     private String password;
     private String nickname;
     private String authority;
-    private Long status;
+    private boolean status;
 
 
     @Override
@@ -59,6 +59,6 @@ public class Member implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return status;
     }
 }

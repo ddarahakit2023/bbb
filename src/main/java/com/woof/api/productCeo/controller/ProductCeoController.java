@@ -23,13 +23,9 @@ public class ProductCeoController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/createCeo")
-    public ResponseEntity createCeo(
-//            @AuthenticationPrincipal Member member,
-                                 @RequestPart ProductCeoCreateReq postProductReq,
-                                 @RequestPart MultipartFile[] uploadFiles) {
-        ProductCeo productCeo = productCeoService.createCeo(
-//                member,
-                postProductReq);
+    public ResponseEntity createCeo(@RequestPart ProductCeoCreateReq postProductReq,
+                                    @RequestPart MultipartFile[] uploadFiles) {
+        ProductCeo productCeo = productCeoService.createCeo(postProductReq);
 
         for (MultipartFile uploadFile:uploadFiles) {
             String uploadPath = productCeoService.uploadFileCeo(uploadFile);
@@ -51,14 +47,14 @@ public class ProductCeoController {
 
         return ResponseEntity.ok().body(productCeoService.listCeo());
     }
+
     @GetMapping("/{idx}")
     public ResponseEntity readCeo(@PathVariable Long idx) {
         return ResponseEntity.ok().body(productCeoService.readCeo(idx));
-
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/updateCeo")
-    public ResponseEntity updateCeo(ProductCeoUpdateReq productCeoUpdateReq) {
+    public ResponseEntity updateCeo(@RequestBody ProductCeoUpdateReq productCeoUpdateReq) {
         productCeoService.updateCeo(productCeoUpdateReq);
 
         return ResponseEntity.ok().body("수정");
