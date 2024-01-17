@@ -1,5 +1,6 @@
 package com.woof.api.member.controller;
 
+import com.woof.api.member.model.entity.Ceo;
 import com.woof.api.member.model.entity.Manager;
 import com.woof.api.member.model.entity.Member;
 import com.woof.api.member.model.requestdto.*;
@@ -94,9 +95,20 @@ public class MemberController {
         if(authentication.getPrincipal() != null) {
             Manager manager = (Manager) authentication.getPrincipal();
             return ResponseEntity.ok().body(PostManagerLoginRes.builder().accessToken(TokenProvider.generateAccessToken(manager.getUsername(), "ROLE_MANAGER")).build());
-
         }
+        return ResponseEntity.badRequest().body("에러");
+    }
 
+
+    // TO DO : ceo 로그인 만들기
+    @RequestMapping(method = RequestMethod.POST, value = "/ceo/login")
+    public ResponseEntity login(@RequestBody PostCeoLoginReq request){
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken("ceo_"+request.getBusinessnum(), request.getPassword());
+        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        if(authentication.getPrincipal() != null) {
+            Ceo ceo = (Ceo) authentication.getPrincipal();
+            return ResponseEntity.ok().body(PostManagerLoginRes.builder().accessToken(TokenProvider.generateAccessToken(ceo.getUsername(), "ROLE_CEO")).build());
+        }
         return ResponseEntity.badRequest().body("에러");
     }
 

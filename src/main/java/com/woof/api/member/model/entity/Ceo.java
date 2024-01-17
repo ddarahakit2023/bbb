@@ -24,7 +24,7 @@ public class Ceo implements UserDetails {
 
     private String email;
     private String password;
-    private Long businessnum;
+    private String businessnum;
     private String ceoname;
     private String authority;
     private boolean status;
@@ -37,7 +37,7 @@ public class Ceo implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return this.businessnum;
     }
 
     @Override
