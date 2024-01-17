@@ -1,4 +1,4 @@
-package com.woof.api.member.model;
+package com.woof.api.member.model.entity;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,8 +17,7 @@ import java.util.Collections;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Ceo implements UserDetails {
-
+public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;

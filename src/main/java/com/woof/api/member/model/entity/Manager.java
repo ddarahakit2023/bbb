@@ -1,4 +1,4 @@
-package com.woof.api.member.model;
+package com.woof.api.member.model.entity;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +17,8 @@ import java.util.Collections;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Member implements UserDetails {
+public class Manager implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
@@ -30,9 +31,6 @@ public class Member implements UserDetails {
 
 
     @Override
-    // 권한 설정 메소드
-    // 유저디테일에 있는 정보 가지고 권한을 세팅하는 메소드
-    // 처음엔 널로 반환하니까 반환할 형태에 맞춰서 권한을 반환
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton((GrantedAuthority) () -> authority);
     }
