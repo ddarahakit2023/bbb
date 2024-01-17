@@ -1,6 +1,6 @@
 package com.woof.api.member.service;
 
-import com.woof.api.member.model.entity.EmailVerify;
+import com.woof.api.member.model.entity.MemberEmailVerify;
 import com.woof.api.member.model.entity.Member;
 import com.woof.api.member.repository.MemberEmailVerifyRepository;
 import com.woof.api.member.repository.MemberRepository;
@@ -21,12 +21,12 @@ public class MemberEmailVerifyService {
     private final JavaMailSender emailSender;
     private final MemberRepository memberRepository;
     public Boolean confirm(String email, String uuid){
-        Optional<EmailVerify> result = memberEmailVerifyRepository.findByEmail(email);
+        Optional<MemberEmailVerify> result = memberEmailVerifyRepository.findByEmail(email);
 
         if(result.isPresent()) {
-            EmailVerify emailVerify = result.get();
+            MemberEmailVerify memberEmailVerify = result.get();
 
-            if(emailVerify.getUuid().equals(uuid)) {
+            if(memberEmailVerify.getUuid().equals(uuid)) {
                 Optional<Member> member = memberRepository.findByEmail(email);
                 if (member.isPresent()) {
                     member.get().setStatus(true);
@@ -40,12 +40,12 @@ public class MemberEmailVerifyService {
     }
 
     public void create(String email, String uuid) {
-        EmailVerify emailVerify = EmailVerify.builder()
+        MemberEmailVerify memberEmailVerify = MemberEmailVerify.builder()
                 .email(email)
                 .uuid(uuid)
                 .build();
 
-        memberEmailVerifyRepository.save(emailVerify);
+        memberEmailVerifyRepository.save(memberEmailVerify);
 
     }
 

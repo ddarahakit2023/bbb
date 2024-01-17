@@ -99,8 +99,6 @@ public class MemberController {
         return ResponseEntity.badRequest().body("에러");
     }
 
-
-    // TO DO : ceo 로그인 만들기
     @RequestMapping(method = RequestMethod.POST, value = "/ceo/login")
     public ResponseEntity login(@RequestBody PostCeoLoginReq request){
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken("ceo_"+request.getBusinessnum(), request.getPassword());

@@ -1,9 +1,9 @@
 package com.woof.api.member.service;
 
 import com.woof.api.member.model.entity.Manager;
+import com.woof.api.member.model.entity.ManagerEmailVerify;
 import com.woof.api.member.repository.ManagerRepository;
 import com.woof.api.utils.TokenProvider;
-import com.woof.api.member.model.entity.EmailVerify;
 import com.woof.api.member.repository.ManagerEmailVerifyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -22,12 +22,12 @@ public class ManagerEmailVerifyService {
     private final ManagerRepository managerRepository;
 
     public Boolean confirm(String email, String uuid){
-        Optional<EmailVerify> result = managerEmailVerifyRepository.findByEmail(email);
+        Optional<ManagerEmailVerify> result = managerEmailVerifyRepository.findByEmail(email);
 
         if(result.isPresent()) {
-            EmailVerify emailVerify = result.get();
+            ManagerEmailVerify managerEmailVerify = result.get();
 
-            if(emailVerify.getUuid().equals(uuid)) {
+            if(managerEmailVerify.getUuid().equals(uuid)) {
                 Optional<Manager> manager = managerRepository.findByEmail(email);
                 if (manager.isPresent()) {
                     manager.get().setStatus(true);
@@ -40,12 +40,12 @@ public class ManagerEmailVerifyService {
     }
 
     public void create(String email, String uuid) {
-        EmailVerify emailVerify = EmailVerify.builder()
+        ManagerEmailVerify managerEmailVerify = ManagerEmailVerify.builder()
                 .email(email)
                 .uuid(uuid)
                 .build();
 
-        managerEmailVerifyRepository.save(emailVerify);
+        managerEmailVerifyRepository.save(managerEmailVerify);
 
     }
 

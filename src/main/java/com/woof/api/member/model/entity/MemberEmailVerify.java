@@ -15,7 +15,7 @@ import javax.persistence.Id;
 @Getter
 @Builder
 @Entity
-public class EmailVerify {
+public class MemberEmailVerify {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
