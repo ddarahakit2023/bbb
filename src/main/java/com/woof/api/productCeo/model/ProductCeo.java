@@ -24,14 +24,14 @@ public class ProductCeo {
     private Integer price;
     private String contents;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "productCeo")
     private List<Orders> orders = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "productCeo", fetch = FetchType.EAGER)
     private List<ProductCeoImage> productCeoImages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "review")
+    @OneToMany(mappedBy = "productCeo")
     private List<Review> reviews = new ArrayList<>();
 
 }
