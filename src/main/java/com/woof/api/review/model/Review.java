@@ -25,8 +25,8 @@ public class Review {
     private Integer productNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Product_id")
-     Product product;
+    @JoinColumn(name = "product_idx")
+    Product product; //상품이랑은 연관관계 매핑만 해주면 됨
 
     @Builder
     public Review(Long idx, String username, String text, Product product, Integer productNumber){
@@ -36,4 +36,6 @@ public class Review {
         this.product = product;
         this.productNumber = productNumber;
     }
+
+
 }

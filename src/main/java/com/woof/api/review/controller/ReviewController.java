@@ -2,6 +2,7 @@ package com.woof.api.review.controller;
 
 
 import com.woof.api.review.model.dto.ReviewDto;
+import com.woof.api.review.model.dto.ReviewResDto;
 import com.woof.api.review.service.ReviewNotFoundException;
 import com.woof.api.review.service.ReviewService;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,9 @@ public class ReviewController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity<Long> create(@RequestBody ReviewDto reviewDto) {
-        Long reviewId = reviewService.create(reviewDto);
-        return ResponseEntity.ok().body(reviewId);
+    public ResponseEntity create(@RequestBody ReviewDto reviewDto) {
+        ReviewResDto reviewResDto = reviewService.create(reviewDto);
+        return ResponseEntity.ok().body(reviewResDto);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/read")
@@ -28,7 +29,7 @@ public class ReviewController {
         return ResponseEntity.ok().body(reviewService.read(idx));
     }
 
-    @PatchMapping("/update/{id}")
+    @PatchMapping("/update/{idx}")
     public ResponseEntity<String> update(@PathVariable Long idx, @RequestBody ReviewDto reviewDto) {
         try {
             reviewService.update(idx, reviewDto);
