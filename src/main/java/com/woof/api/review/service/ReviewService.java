@@ -14,11 +14,11 @@ import java.util.Optional;
 public class ReviewService {
     ReviewRepository reviewRepository;
 
-    ProductRepository productRepository;
 
-    public ReviewService(ReviewRepository reviewRepository , ProductRepository productRepository) {
+
+    public ReviewService(ReviewRepository reviewRepository , ) {
         this.reviewRepository = reviewRepository;
-        this.productRepository = productRepository;
+
     }
 
     public ReviewResDto create(ReviewDto reviewDto) {
