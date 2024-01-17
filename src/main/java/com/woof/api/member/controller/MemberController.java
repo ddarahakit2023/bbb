@@ -12,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
@@ -119,4 +116,18 @@ public class MemberController {
     public String testMember() {
         return "성공";
     }
+
+    @GetMapping("/member/{email}")
+    public ResponseEntity read(@PathVariable String email) {
+        GetMemberReadRes response = memberService.readMember(email);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @RequestMapping(method = RequestMethod.PATCH, value = "/member/update")
+    public ResponseEntity update (@RequestBody PatchMemberUpdateReq request) {
+        PatchMemberUpdateRes response = memberService.updateMember(request);
+        return ResponseEntity.ok().body(response);
+    }
+
+
 }

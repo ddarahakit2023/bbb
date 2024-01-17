@@ -1,8 +1,10 @@
 package com.woof.api.member.service;
 
 import com.woof.api.member.model.entity.Member;
-import com.woof.api.member.model.requestdto.GetEmailConfirmReq;
+import com.woof.api.member.model.requestdto.PatchMemberUpdateReq;
 import com.woof.api.member.model.requestdto.PostMemberSignupReq;
+import com.woof.api.member.model.responsedto.GetMemberReadRes;
+import com.woof.api.member.model.responsedto.PatchMemberUpdateRes;
 import com.woof.api.member.model.responsedto.PostMemberSignupRes;
 import com.woof.api.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -55,15 +57,6 @@ public class MemberService implements UserDetailsService {
         return postMemberSignupRes;
     }
 
-    public Boolean getCheckEmail (GetEmailConfirmReq getEmailConfirmReq) {
-        Optional<Member> result = memberRepository.findByEmail(getEmailConfirmReq.getEmail());
-        if (!result.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println(username);
@@ -78,9 +71,46 @@ public class MemberService implements UserDetailsService {
 
     // read
     // 내 정보 조회
+    public GetMemberReadRes readMember (String username) {
+        Optional<Member> result = memberRepository.findByEmail(username);
 
+        Member member = result.get();
+
+        GetMemberReadRes response = GetMemberReadRes.builder()
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .authority(member.getAuthority())
+                .build();
+
+        if (result.isPresent()) {
+            return response;
+        } else {
+            return null;
+        }
+
+    }
 
     // update
+    public PatchMemberUpdateRes updateMember (PatchMemberUpdateReq request) {
+        Optional<Member> result = memberRepository.findByEmail(request.getEmail());
+
+        if (result.isPresent()) {
+
+            Member member = result.get();
+
+            member.setNickname(request.getNickname());
+
+            Member updateMember = memberRepository.save(member);
+
+            PatchMemberUpdateRes response = PatchMemberUpdateRes.builder()
+                    .nickname(updateMember.getNickname())
+                    .build();
+            return response;
+        } else {
+            return null;
+        }
+
+    }
 
     // delete
 
