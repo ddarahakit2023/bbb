@@ -7,6 +7,7 @@ import com.woof.api.cart.repository.CartRepository;
 import com.woof.api.common.Response;
 import com.woof.api.member.model.Member;
 import com.woof.api.member.repository.MemberRepository;
+import com.woof.api.orders.model.Orders;
 import com.woof.api.productCeo.model.ProductCeo;
 import com.woof.api.productManager.model.ProductManager;
 import lombok.RequiredArgsConstructor;
@@ -83,11 +84,15 @@ public class CartService {
 
 
        // @Transactional
-        public Response cartRemove (Long idx) {
-            // CartRepository를 사용하여 id 및 관련 멤버로 즐겨찾기 삭제
-            cartRepository.deleteByMemberIdx(idx);
+        public void cartRemove (Long idx) {
 
-            return Response.success("삭제 성공");
+            cartRepository.delete(
+                    Cart.builder()
+                           .idx(idx)
+                           .build());
+
+
+
         }
 
     }

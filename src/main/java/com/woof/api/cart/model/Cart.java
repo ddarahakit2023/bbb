@@ -21,15 +21,15 @@ public class Cart {
 
 
     // 즐겨찾기 : 멤버 = N : 1
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_idx")
     private Member member;
     // 즐겨찾기 : 업체 = N : 1
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productCeo_idx")
     private ProductCeo productCeo;
     // 즐겨찾기 : 매니저 = N : 1
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productManager_idx")
     private ProductManager productManager;
 

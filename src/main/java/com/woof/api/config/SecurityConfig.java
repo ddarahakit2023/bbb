@@ -40,7 +40,7 @@ public class SecurityConfig {
                     .antMatchers("/ceo/authenticate").hasRole("CEO")
                     .anyRequest().permitAll();
 
-            http.addFilterBefore(new JwtFilter(memberService, tokenProvider), UsernamePasswordAuthenticationFilter.class);
+            http.addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
             http.formLogin().disable();
 
