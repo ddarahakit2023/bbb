@@ -24,14 +24,16 @@ public class ProductManager {
     private Integer price;
     private String contents;
 
-//    @OneToMany(mappedBy = "productManager")
-//    private List<Orders> orders = new ArrayList<>();      합칠 때 활성화
+    @OneToMany(mappedBy = "productManager")
+    private List<Orders> orders = new ArrayList<>();
+//    합칠 때 활성화
 
 
     @OneToMany(mappedBy = "productManager", fetch = FetchType.EAGER)
     private List<ProductManagerImage> productManagerImages = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "productManager")
-//    private List<Review> reviews = new ArrayList<>();     합칠 때 활성화
+    @OneToMany(mappedBy = "productManager")
+    private List<Review> reviews = new ArrayList<>();
+//    합칠 때 활성화
 
 }
