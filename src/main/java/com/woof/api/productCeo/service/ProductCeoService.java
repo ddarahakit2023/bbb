@@ -52,8 +52,10 @@ public class ProductCeoService {
 
     public ProductCeoListRes listCeo() {
         List<ProductCeo> result = productCeoRepository.findAll();
+        List<ProductCeoImage> all = productCeoImageRepository.findAll();
 
         List<ProductCeoReadRes> productCeoReadResList = new ArrayList<>();
+
 
         for (ProductCeo productCeo : result) {
             List<ProductCeoImage> productCeoImages = productCeo.getProductCeoImages();

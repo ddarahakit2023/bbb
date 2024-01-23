@@ -46,7 +46,7 @@ public class ProductManagerService {
 
         return productManagerRepository.save(ProductManager.builder()
                 .idx(productManagerCreateReq.getIdx())
-                .gender(productManagerCreateReq.getManagerName())
+                .gender(productManagerCreateReq.getGender())
                 .phoneNumber(productManagerCreateReq.getPhoneNumber())
                 .managerName(productManagerCreateReq.getManagerName())
                 .price(productManagerCreateReq.getPrice())
