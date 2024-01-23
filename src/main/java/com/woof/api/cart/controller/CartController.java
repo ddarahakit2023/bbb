@@ -5,7 +5,7 @@ package com.woof.api.cart.controller;
 
 import com.woof.api.cart.model.Cart;
 import com.woof.api.cart.service.CartService;
-import com.woof.api.member.model.Member;
+import com.woof.api.member.model.entity.Member;
 import com.woof.api.productManager.model.ProductManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

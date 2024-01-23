@@ -2,6 +2,10 @@ package com.woof.api.productManager.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.woof.api.productCeo.model.ProductCeo;
+import com.woof.api.productCeo.model.ProductCeoImage;
+import com.woof.api.productCeo.model.dto.ProductCeoReadRes;
+import com.woof.api.productCeo.model.dto.ProductCeoReadRes2;
 import com.woof.api.productManager.model.dto.ProductManagerCreateReq;
 import com.woof.api.productManager.model.ProductManager;
 import com.woof.api.productManager.model.ProductManagerImage;
@@ -16,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,15 +42,13 @@ public class ProductManagerService {
     private String bucket;
 
 
-    public ProductManager createManager(
-//            Member member,
-            ProductManagerCreateReq productManagerCreateReq) {
+    public ProductManager createManager(ProductManagerCreateReq productManagerCreateReq) {
 
         return productManagerRepository.save(ProductManager.builder()
                 .idx(productManagerCreateReq.getIdx())
-//                .brandIdx(member)
-                .gender(productManagerCreateReq.getManagerName())
+                .gender(productManagerCreateReq.getGender())
                 .phoneNumber(productManagerCreateReq.getPhoneNumber())
+                .managerName(productManagerCreateReq.getManagerName())
                 .price(productManagerCreateReq.getPrice())
                 .contents(productManagerCreateReq.getContents())
                 .build());
@@ -68,11 +71,11 @@ public class ProductManagerService {
 
             ProductManagerReadRes productManagerReadRes = ProductManagerReadRes.builder()
                     .idx(productManager.getIdx())
+                    .managerName(productManager.getManagerName())
                     .gender(productManager.getGender())
                     .phoneNumber(productManager.getPhoneNumber())
                     .price(productManager.getPrice())
                     .contents(productManager.getContents())
-//                    .brandIdx(productManager.getBrandIdx().getIdx())
                     .filename(filenames)
                     .build();
 
@@ -89,11 +92,12 @@ public class ProductManagerService {
                 .build();
     }
 
-    public ProductManagerReadRes2 readManager(Long idx) {
-        Optional<ProductManager> result = productManagerRepository.findById(idx);
 
-        if (result.isPresent()) {
-            ProductManager productManager = result.get();
+    public ProductManagerReadRes2 readManager(Long idx) {
+        Optional<ProductManager> resultManager = productManagerRepository.findById(idx);
+
+        if (resultManager.isPresent()) {
+            ProductManager productManager = resultManager.get();
 
             List<ProductManagerImage> productManagerImages = productManager.getProductManagerImages();
 
@@ -112,7 +116,6 @@ public class ProductManagerService {
                     .phoneNumber(productManager.getPhoneNumber())
                     .price(productManager.getPrice())
                     .contents(productManager.getContents())
-//                    .brandIdx(productManager.getBrandIdx().getIdx())
                     .filename(filenames)
                     .build();
 
@@ -126,8 +129,6 @@ public class ProductManagerService {
         }
 
         return null;
-
-
     }
 
     public void updateManager(ProductManagerUpdateReq productManagerUpdateReq) {
@@ -144,10 +145,22 @@ public class ProductManagerService {
         }
     }
 
+    @Transactional
     public void deleteManager(Long idx) {
-        productManagerRepository.delete(ProductManager.builder()
-                .idx(idx)
-                .build());
+        List<ProductManagerImage> all = productManagerImageRepository.findAllByProductManagerIdx(idx);
+        List<ProductManagerImage> aa = new ArrayList<>();
+        for (ProductManagerImage productManagerImage : all) {
+            ProductManagerImage result = ProductManagerImage.builder()
+                    .idx(productManagerImage.getIdx())
+                    .build();
+            aa.add(result);
+        }
+
+        for (ProductManagerImage productManagerImage : aa) {
+            productManagerImageRepository.delete(productManagerImage);
+        }
+
+        productManagerRepository.delete(ProductManager.builder().idx(idx).build());
     }
 
 
@@ -164,10 +177,8 @@ public class ProductManagerService {
         String folderPath = makeFolderManager();
         String uuid = UUID.randomUUID().toString();
         String saveFileName = folderPath + File.separator + uuid + "_" + originalName;
-//        File saveFile = new File(uploadPath, saveFileName);
         InputStream input = null;
         try {
-//            file.transferTo(saveFile);
             input = file.getInputStream();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());

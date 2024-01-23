@@ -1,6 +1,6 @@
 package com.woof.api.productCeo.controller;
 
-//import com.woof.api.member.model.Member;
+//import com.woof.api.member.model.entity.Member;
 import com.woof.api.productCeo.model.ProductCeo;
 import com.woof.api.productCeo.model.dto.ProductCeoCreateReq;
 import com.woof.api.productCeo.model.dto.ProductCeoCreateRes;
@@ -8,7 +8,6 @@ import com.woof.api.productCeo.model.dto.ProductCeoCreateResult;
 import com.woof.api.productCeo.model.dto.ProductCeoUpdateReq;
 import com.woof.api.productCeo.service.ProductCeoService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,7 +53,7 @@ public class ProductCeoController {
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/updateCeo")
-    public ResponseEntity updateCeo(ProductCeoUpdateReq productCeoUpdateReq) {
+    public ResponseEntity updateCeo(@RequestBody ProductCeoUpdateReq productCeoUpdateReq) {
         productCeoService.updateCeo(productCeoUpdateReq);
 
         return ResponseEntity.ok().body("수정");

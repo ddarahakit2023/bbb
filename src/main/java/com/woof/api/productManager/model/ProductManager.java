@@ -1,5 +1,7 @@
 package com.woof.api.productManager.model;
 
+import com.woof.api.orders.model.Orders;
+import com.woof.api.review.model.Review;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,14 +24,16 @@ public class ProductManager {
     private Integer price;
     private String contents;
 
-//    @OneToMany(mappedBy = "order")
-//    private List<Order> orders = new ArrayList<>();           주문이랑 합칠 때 활성화
-
-
     @OneToMany(mappedBy = "productManager")
+    private List<Orders> orders = new ArrayList<>();
+//    합칠 때 활성화
+
+
+    @OneToMany(mappedBy = "productManager", fetch = FetchType.EAGER)
     private List<ProductManagerImage> productManagerImages = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "review")
-//    private List<review> reviews = new ArrayList<>();         리뷰랑 합칠 때 활성화
+    @OneToMany(mappedBy = "productManager")
+    private List<Review> reviews = new ArrayList<>();
+//    합칠 때 활성화
 
 }

@@ -5,7 +5,7 @@ import com.woof.api.cart.model.Cart;
 import com.woof.api.cart.model.dto.CartDto;
 import com.woof.api.cart.repository.CartRepository;
 import com.woof.api.common.Response;
-import com.woof.api.member.model.Member;
+import com.woof.api.member.model.entity.Member;
 import com.woof.api.member.repository.MemberRepository;
 import com.woof.api.orders.model.Orders;
 import com.woof.api.productCeo.model.ProductCeo;
@@ -39,6 +39,8 @@ public class CartService {
                     .productManager(ProductManager.builder().idx(productManagerIdx).build())
                     .member(member.get())
                     .build());
+
+
 
             return Response.success("추가 성공");
         } else {

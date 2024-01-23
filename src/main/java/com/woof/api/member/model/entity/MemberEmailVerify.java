@@ -1,4 +1,4 @@
-package com.woof.api.member.model;
+package com.woof.api.member.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import javax.persistence.Id;
 @Getter
 @Builder
 @Entity
-public class EmailVerify {
+public class MemberEmailVerify {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

@@ -2,7 +2,7 @@ package com.woof.api.productCeo.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-//import com.woof.api.member.model.Member;
+//import com.woof.api.member.model.entity.Member;
 import com.woof.api.productCeo.model.ProductCeo;
 import com.woof.api.productCeo.model.ProductCeoImage;
 import com.woof.api.productCeo.model.dto.ProductCeoCreateReq;
@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,8 +52,10 @@ public class ProductCeoService {
 
     public ProductCeoListRes listCeo() {
         List<ProductCeo> result = productCeoRepository.findAll();
+        List<ProductCeoImage> all = productCeoImageRepository.findAll();
 
         List<ProductCeoReadRes> productCeoReadResList = new ArrayList<>();
+
 
         for (ProductCeo productCeo : result) {
             List<ProductCeoImage> productCeoImages = productCeo.getProductCeoImages();
@@ -124,8 +127,6 @@ public class ProductCeoService {
         }
 
         return null;
-
-
     }
 
     public void updateCeo(ProductCeoUpdateReq productCeoUpdateReq) {
@@ -142,7 +143,21 @@ public class ProductCeoService {
         }
     }
 
+    @Transactional
     public void deleteCeo(Long idx) {
+        List<ProductCeoImage> all = productCeoImageRepository.findAllByProductCeoIdx(idx);
+        List<ProductCeoImage> aa = new ArrayList<>();
+        for (ProductCeoImage productCeoImage : all) {
+            ProductCeoImage result = ProductCeoImage.builder()
+                    .idx(productCeoImage.getIdx())
+                    .build();
+            aa.add(result);
+        }
+
+        for (ProductCeoImage productCeoImage : aa) {
+            productCeoImageRepository.delete(productCeoImage);
+        }
+
         productCeoRepository.delete(ProductCeo.builder().idx(idx).build());
     }
 

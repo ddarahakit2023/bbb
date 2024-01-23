@@ -1,6 +1,5 @@
 package com.woof.api.productManager.controller;
 
-//import com.woof.api.member.model.Member;
 import com.woof.api.productManager.model.ProductManager;
 import com.woof.api.productManager.model.dto.ProductManagerCreateReq;
 import com.woof.api.productManager.model.dto.ProductManagerCreateRes;
@@ -24,12 +23,9 @@ public class ProductManagerController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/createManager")
     public ResponseEntity createManager(
-//            @AuthenticationPrincipal Member member,
                                  @RequestPart ProductManagerCreateReq postProductReq,
                                  @RequestPart MultipartFile[] uploadFiles) {
-        ProductManager productManager = productManagerService.createManager(
-//                member,
-                postProductReq);
+        ProductManager productManager = productManagerService.createManager(postProductReq);
 
         for (MultipartFile uploadFile:uploadFiles) {
             String uploadPath = productManagerService.uploadFileManager(uploadFile);
@@ -58,7 +54,7 @@ public class ProductManagerController {
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/updateManager")
-    public ResponseEntity updateManager(ProductManagerUpdateReq productManagerUpdateReq) {
+    public ResponseEntity updateManager(@RequestBody ProductManagerUpdateReq productManagerUpdateReq) {
         productManagerService.updateManager(productManagerUpdateReq);
 
         return ResponseEntity.ok().body("수정");
