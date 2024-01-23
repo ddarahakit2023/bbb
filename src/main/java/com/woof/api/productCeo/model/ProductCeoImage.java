@@ -18,7 +18,7 @@ public class ProductCeoImage {
     private String filename;
 
     @ManyToOne
-    @JoinColumn(name = "ProductCeo_idx")
+    @JoinColumn(name = "ProductCeo_id")
     private ProductCeo productCeo;
 
 }
