@@ -33,6 +33,8 @@ public class SecurityConfig {
                     .antMatchers("/v2/api-docs/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
                     .antMatchers("/member/*").permitAll()
                     .antMatchers("/ceo/*").permitAll()
+                    .antMatchers("/productCeo/*").permitAll()
+                    .antMatchers("/productManager/*").permitAll()
                     .antMatchers("/test/ceo").hasRole("CEO")
                     .antMatchers("/test/member").hasRole("MEMBER")
                     .anyRequest().permitAll();
