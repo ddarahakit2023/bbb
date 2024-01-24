@@ -2,6 +2,7 @@ package com.woof.api.orders.model;
 
 
 import com.woof.api.member.model.entity.Ceo;
+import com.woof.api.member.model.entity.Manager;
 import com.woof.api.member.model.entity.Member;
 import com.woof.api.payment.model.Payment;
 import com.woof.api.productCeo.model.ProductCeo;
@@ -53,6 +54,10 @@ public class Orders { //예약어 때문에 orders로 했어용
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "payment_idx")
     private Payment payment;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_idx")
+    private Manager manager;
 
     //리뷰 매핑 성공
 

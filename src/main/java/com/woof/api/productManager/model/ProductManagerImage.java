@@ -18,7 +18,7 @@ public class ProductManagerImage {
     private String filename;
 
     @ManyToOne
-    @JoinColumn(name = "ProductCeo_id")
+    @JoinColumn(name = "ProductManager_id")
     private ProductManager productManager;
 
 }
