@@ -125,7 +125,6 @@ public class ProductCeoService {
                     .result(productCeoReadRes)
                     .build();
         }
-
         return null;
     }
 

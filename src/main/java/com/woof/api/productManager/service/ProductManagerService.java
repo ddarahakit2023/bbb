@@ -127,7 +127,6 @@ public class ProductManagerService {
                     .result(productManagerReadRes)
                     .build();
         }
-
         return null;
     }
 
