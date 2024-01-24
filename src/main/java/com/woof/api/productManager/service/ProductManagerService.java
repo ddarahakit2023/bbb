@@ -93,7 +93,7 @@ public class ProductManagerService {
                 .build();
     }
 
-
+    @Transactional
     public ProductManagerReadRes2 readManager(Long idx) {
         Optional<ProductManager> resultManager = productManagerRepository.findById(idx);
 
