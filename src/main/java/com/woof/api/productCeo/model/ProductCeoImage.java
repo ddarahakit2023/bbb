@@ -17,7 +17,7 @@ public class ProductCeoImage {
     private Long idx;
     private String filename;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ProductCeo_id")
     private ProductCeo productCeo;
 

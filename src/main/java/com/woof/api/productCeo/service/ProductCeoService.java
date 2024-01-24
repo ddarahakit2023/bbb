@@ -49,10 +49,10 @@ public class ProductCeoService {
                 .contents(productCeoCreateReq.getContents())
                 .build());
     }
-
+@Transactional
     public ProductCeoListRes listCeo() {
         List<ProductCeo> result = productCeoRepository.findAll();
-        List<ProductCeoImage> all = productCeoImageRepository.findAll();
+//        List<ProductCeoImage> all = productCeoImageRepository.findAll();
 
         List<ProductCeoReadRes> productCeoReadResList = new ArrayList<>();
 

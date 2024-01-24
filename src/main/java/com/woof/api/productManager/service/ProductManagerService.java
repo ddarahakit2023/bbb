@@ -54,6 +54,7 @@ public class ProductManagerService {
                 .build());
     }
 
+    @Transactional
     public ProductManagerListRes listManager() {
         List<ProductManager> resultManager = productManagerRepository.findAll();
         List<ProductManagerReadRes> productManagerReadResList = new ArrayList<>();
