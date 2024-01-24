@@ -1,5 +1,6 @@
 package com.woof.api.productCeo.model;
 
+import com.woof.api.cart.model.Cart;
 import com.woof.api.orders.model.Orders;
 import com.woof.api.review.model.Review;
 import lombok.*;
@@ -28,6 +29,8 @@ public class ProductCeo {
     private List<Orders> orders = new ArrayList<>();
 //    합칠 때 활성화
 
+    @OneToMany(mappedBy = "productCeo")
+    private List<Cart> carts = new ArrayList<>();
 
     @OneToMany(mappedBy = "productCeo")
     private List<ProductCeoImage> productCeoImages = new ArrayList<>();

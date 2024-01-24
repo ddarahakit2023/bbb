@@ -1,6 +1,7 @@
 package com.woof.api.member.model.entity;
 
 import com.woof.api.cart.model.Cart;
+import com.woof.api.orders.model.Orders;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +31,9 @@ public class Member implements UserDetails {
 
     @OneToMany(mappedBy = "member")
     List<Cart> carts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    List<Orders> orders = new ArrayList<>();
 
 
     @Override
