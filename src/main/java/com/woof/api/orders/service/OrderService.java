@@ -1,11 +1,11 @@
 package com.woof.api.orders.service;
 
+import com.woof.api.member.model.entity.Member;
 import com.woof.api.orders.model.Orders;
-import com.woof.api.orders.model.dto.OrdersListRes;
-import com.woof.api.orders.model.dto.OrdersReadRes;
-import com.woof.api.orders.model.dto.OrdersReadRes2;
-import com.woof.api.orders.model.dto.OrdersUpdateReq;
+import com.woof.api.orders.model.dto.*;
 import com.woof.api.orders.repository.OrderRepository;
+import com.woof.api.productCeo.model.ProductCeo;
+import com.woof.api.productManager.model.ProductManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,14 +21,27 @@ import java.util.Optional;
 public class OrderService {
     private final OrderRepository orderRepository;
 
-    public void create(Orders orders) {
-        orderRepository.save(Orders.builder()
-                .phoneNumber(orders.getPhoneNumber())
-                .time(orders.getTime())
-                .orderDetails(orders.getOrderDetails())
-                .place(orders.getPlace())
-                .reservation_status(orders.getReservation_status())
-                .build());
+    public void create(OrderDto orderDto) {
+        orderRepository.save(
+                Orders.builder()
+                        .productCeo(
+                                ProductCeo.builder()
+                                        .idx(orderDto.getProductCeo().getIdx())
+                                        .build())
+                        .productManager(
+                                ProductManager.builder()
+                                        .idx(orderDto.getProductManager().getIdx())
+                                        .build())
+                        .member(
+                                Member.builder()
+                                        .idx(orderDto.getMember().getIdx())
+                                        .build())
+                        .phoneNumber(orderDto.getPhoneNumber())
+                        .time(orderDto.getTime())
+                        .orderDetails(orderDto.getOrderDetails())
+                        .place(orderDto.getPlace())
+                        .reservation_status(orderDto.getReservation_status())
+                        .build());
     }
 
     public OrdersListRes list() {
