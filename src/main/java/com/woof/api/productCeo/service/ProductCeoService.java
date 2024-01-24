@@ -50,9 +50,11 @@ public class ProductCeoService {
                 .build());
     }
 
+    @Transactional
     public ProductCeoListRes listCeo() {
         List<ProductCeo> result = productCeoRepository.findAll();
-        List<ProductCeoImage> all = productCeoImageRepository.findAll();
+
+//        List<ProductCeoImage> all = productCeoImageRepository.findAll();
 
         List<ProductCeoReadRes> productCeoReadResList = new ArrayList<>();
 
@@ -90,7 +92,7 @@ public class ProductCeoService {
                 .result(productCeoReadResList)
                 .build();
     }
-
+    @Transactional
     public ProductCeoReadRes2 readCeo(Long idx) {
         Optional<ProductCeo> resultCeo = productCeoRepository.findById(idx);
 
