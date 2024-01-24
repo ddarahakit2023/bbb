@@ -27,7 +27,7 @@ public class ReviewService {
                 .text(reviewDto.getText())
                 .productNumber(reviewDto.getProductNumber())
                 .orders(Orders.builder()
-                        .idx(reviewDto.getOrderIdx())
+                        .idx(reviewDto.getOrdersIdx())
                         .build())
 //                .product(Product.builder()
 //                        .idx(reviewDto.getProductIdx())
@@ -42,7 +42,7 @@ public class ReviewService {
                 .username(result.getUsername())
                 .text(result.getText())
                 .productNumber(result.getProductNumber())
-                .orderIdx(result.getOrders().getIdx())
+                .ordersIdx(result.getOrders().getIdx())
                 .status("리뷰가 생성되었습니다.")
                 .build();
     }
@@ -52,7 +52,7 @@ public class ReviewService {
 
         return ReviewDto.builder()
                 .idx(review.getIdx())
-                .orderIdx(review.getOrders().getIdx())
+                .ordersIdx(review.getOrders().getIdx())
                 .text(review.getText())
                 .username(review.getUsername())
                 .productNumber(review.getProductNumber())
