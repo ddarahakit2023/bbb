@@ -51,16 +51,7 @@ public class CartService {
                 .build();
         return result;
 
-//        Optional <Member> member = memberRepository.findBy(idx);
-        // CartRepository를 사용하여 새로운 Cart 엔티티를 데이터베이스에 저장
-//        if (member.isPresent()) {
-//            Cart cart = cartRepository.save(Cart.builder()
-//                    .productCeo(ProductCeo.builder().idx(productCeoIdx).build())
-//                    .productManager(ProductManager.builder().idx(productManagerIdx).build())
-//                    .member(member.get())
-//                    .build());
-//
-//
+
 //
 //            return Response.success("추가 성공");
 //        } else {
