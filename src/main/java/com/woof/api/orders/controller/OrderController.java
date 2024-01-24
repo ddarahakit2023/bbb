@@ -2,6 +2,7 @@ package com.woof.api.orders.controller;
 
 
 import com.woof.api.orders.model.Orders;
+import com.woof.api.orders.model.dto.OrderDto;
 import com.woof.api.orders.model.dto.OrdersReadRes2;
 import com.woof.api.orders.model.dto.OrdersUpdateReq;
 import com.woof.api.orders.service.OrderService;
@@ -17,8 +18,8 @@ public class OrderController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity create(Orders orders){
-        orderService.create(orders);
+    public ResponseEntity create(OrderDto orderDto){
+        orderService.create(orderDto);
 
         return ResponseEntity.ok().body("예약에 성공하였습니다");
     }
