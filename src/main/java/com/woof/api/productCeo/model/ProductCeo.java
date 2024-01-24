@@ -29,7 +29,7 @@ public class ProductCeo {
 //    합칠 때 활성화
 
 
-    @OneToMany(mappedBy = "productCeo", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "productCeo")
     private List<ProductCeoImage> productCeoImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "productCeo")

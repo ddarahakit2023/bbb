@@ -2,18 +2,18 @@ package com.woof.api.cart.service;
 
 
 import com.woof.api.cart.model.Cart;
-import com.woof.api.cart.model.dto.CartDto;
+import com.woof.api.cart.model.dto.*;
 import com.woof.api.cart.repository.CartRepository;
 import com.woof.api.common.Response;
 import com.woof.api.member.model.entity.Member;
 import com.woof.api.member.repository.MemberRepository;
-import com.woof.api.orders.model.Orders;
 import com.woof.api.productCeo.model.ProductCeo;
+import com.woof.api.productCeo.repository.ProductCeoRepository;
 import com.woof.api.productManager.model.ProductManager;
+import com.woof.api.productManager.repository.ProductManagerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,78 +24,75 @@ import java.util.Optional;
 public class CartService {
 
     private final CartRepository cartRepository;
-    private final MemberRepository memberRepository;
 
     // TODO: 에러코드 수정
+    public Response cartIn(CartCreateReq request) {
+        // repo .save();
+        Cart cart = cartRepository.save(Cart.builder()
+                .member(Member.builder()
+                        .idx(request.getMemberIdx())
+                        .build())
+                .productCeo(ProductCeo.builder()
+                        .idx(request.getProductCeoIdx())
+                        .build())
+                .productManager(ProductManager.builder()
+                        .idx(request.getProductManagerIdx())
+                        .build())
+                .build());
 
-    public Response cartIn(Long productCeoIdx, Long productManagerIdx, String email) {
+        Response<Object> result = Response.builder()
+                .resultCode("등록이 성공됐습니다.")
+                .result(CartCreateRes.builder()
+                        .cartIdx(cart.getIdx())
+                        .memberIdx(cart.getMember().getIdx())
+                        .productCeoIdx(cart.getProductCeo().getIdx())
+                        .productManagerIdx(cart.getProductManager().getIdx())
+                        .build())
+                .build();
+        return result;
 
-
-        Optional<Member> member = memberRepository.findByEmail(email);
+//        Optional <Member> member = memberRepository.findBy(idx);
         // CartRepository를 사용하여 새로운 Cart 엔티티를 데이터베이스에 저장
-        if (member.isPresent()) {
-            Cart cart = cartRepository.save(Cart.builder()
-                    .productCeo(ProductCeo.builder().idx(productCeoIdx).build())
-                    .productManager(ProductManager.builder().idx(productManagerIdx).build())
-                    .member(member.get())
-                    .build());
-
-
-
-            return Response.success("추가 성공");
-        } else {
-            return Response.error("2222");
-        }
+//        if (member.isPresent()) {
+//            Cart cart = cartRepository.save(Cart.builder()
+//                    .productCeo(ProductCeo.builder().idx(productCeoIdx).build())
+//                    .productManager(ProductManager.builder().idx(productManagerIdx).build())
+//                    .member(member.get())
+//                    .build());
+//
+//
+//
+//            return Response.success("추가 성공");
+//        } else {
+//            return Response.error("2222");
+//        }
     }
-    // 즐겨찾기 목록 조회
-    public Response cartList (String email) {
 
-        Optional<Member> member = memberRepository.findByEmail(email);
+//     즐겨찾기 목록 조회
+    public List<CartListRes> cartList(Long memberIdx) {
+        List<Cart> result = cartRepository.findAllByMemberIdx(memberIdx);
+        List<CartListRes> list = new ArrayList<>();
 
-
-        if (member.isPresent()) {
-            List<Cart> carts = cartRepository.findAllByMember(Member.builder().idx(member.get().getIdx()).build());
-            List<CartDto> cartList = new ArrayList<>();
-
-            for (Cart cart : carts) {
-
-                ProductCeo productCeo = cart.getProductCeo();
-                ProductManager productManager = cart.getProductManager();
-
-                cartList.add(CartDto.builder()
-                        .idx(cart.getIdx())
-                        .productCeoName(productCeo.getStoreName())// 업체명
-                        //.filename(cart.getProductCeo().getProductCeoImages().get(0).getFilename())// 업체 사진
-                        .productManagerName(productManager.getManagerName())// 매니저 이름
-                        .build());
-
-            }
-            return Response.success("조회 성공");
-        } else {
-
-            return Response.error("0000");
+        for (Cart cart : result) {
+            CartListRes cartListRes = CartListRes.builder()
+                    .cartIdx(cart.getIdx())
+                    .memberIdx(cart.getMember().getIdx())
+                    .productCeoIdx(cart.getProductCeo().getIdx())
+                    .productCeoStoreName(cart.getProductCeo().getStoreName())
+                    .productManagerIdx(cart.getProductManager().getIdx())
+                    .productMangerName(cart.getProductManager().getManagerName())
+                    .build();
+            list.add(cartListRes);
         }
-    }
-//        return CartListRes.builder()
-//                .code(1000)
-//                .message("요청 성공.")
-//                .success(true)
-//                .isSuccess(true)
-//                .result(cartDtos)
-//                .build();
-
-
-       // @Transactional
-        public void cartRemove (Long idx) {
-
-            cartRepository.delete(
-                    Cart.builder()
-                           .idx(idx)
-                           .build());
-
-
-
-        }
+        return list;
 
     }
+
+
+    // @Transactional
+    public void cartRemove(Long idx) {
+        cartRepository.deleteById(idx);
+    }
+
+}
 

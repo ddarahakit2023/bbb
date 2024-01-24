@@ -29,7 +29,7 @@ public class ProductManager {
 //    합칠 때 활성화
 
 
-    @OneToMany(mappedBy = "productManager", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "productManager")
     private List<ProductManagerImage> productManagerImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "productManager")

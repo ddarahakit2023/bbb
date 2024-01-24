@@ -1,10 +1,12 @@
 package com.woof.api.common;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class Response<T> {
     private String resultCode;
     private T result;
