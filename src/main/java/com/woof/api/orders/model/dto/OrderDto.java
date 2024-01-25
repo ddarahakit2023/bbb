@@ -13,7 +13,6 @@ import lombok.*;
 @Builder
 @Data
 public class OrderDto {
-    private Long idx;
 
     private Long phoneNumber; //예약자 전화번호
     private Integer time; //예약시간
@@ -25,9 +24,8 @@ public class OrderDto {
 //    private ProductCeo productCeo;
 //    private Member member;
 
-    private Long productCeoIdx;
-
     private Long productManagerIdx;
-
+    private Long productCeoIdx;
     private Long memberIdx;
+
  }

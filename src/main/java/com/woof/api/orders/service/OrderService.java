@@ -44,12 +44,11 @@ public class OrderService {
                         .build());
     }
 
-    
     public OrdersListRes list() {
         List<Orders> result = orderRepository.findAll();
         List<OrdersReadRes> orderDtos = new ArrayList<>();
 
-        for (Orders orders:result) {
+        for (Orders orders : result) {
 
             List<OrdersReadRes> ordersReadRes = new ArrayList<>();
 
@@ -73,8 +72,8 @@ public class OrderService {
 
     }
 
-    public OrdersReadRes2 read(Long idx) {
-        Optional<Orders> result = orderRepository.findById(idx);
+    public OrdersReadRes2 read(Long id) {
+        Optional<Orders> result = orderRepository.findById(id);
         List<OrdersReadRes2> orderDto2 = new ArrayList<>();
 
         if (result.isPresent()) {
@@ -164,23 +163,23 @@ public class OrderService {
     }
 
     @Transactional
-    public OrdersReadRes2 delete(Long idx) {
+    public void delete(Long idx) {
         orderRepository.delete(
                 Orders.builder()
                         .idx(idx)
                         .build());
 
-        OrdersReadRes2 response2 = OrdersReadRes2.builder()
-                .code(200)
-                .message("요청 성공.")
-                .success(false)
-                .isSuccess(false)
-                .result(OrdersReadRes.builder()
-                        .reservation_status("주문 삭제에 성공했습니다")
-                        .build())
-                .build();
+//        OrdersReadRes2 response2 = OrdersReadRes2.builder()
+//                .code(400)
+//                .message("요청 실패.")
+//                .success(false)
+//                .isSuccess(false)
+//                .result(OrdersReadRes.builder()
+//                        .reservation_status("주문 삭제에 실패헀습니다")
+//                        .build())
+//                .build();
 
-        return response2;
+        return ;
     }
 
 }

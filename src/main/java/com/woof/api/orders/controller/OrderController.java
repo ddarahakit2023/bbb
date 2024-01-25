@@ -48,12 +48,10 @@ public class OrderController {
 
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
-    public ResponseEntity<OrdersReadRes2> delete(Long idx){
+    public ResponseEntity delete(Long idx){
         orderService.delete(idx);
 
-        OrdersReadRes2 result2 = orderService.delete(idx);
-
-        return ResponseEntity.ok().body(result2);
+        return ResponseEntity.ok().body("삭제를 성공했습니다.");
     }
 
 

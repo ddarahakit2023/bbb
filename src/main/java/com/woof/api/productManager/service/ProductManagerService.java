@@ -54,6 +54,7 @@ public class ProductManagerService {
                 .build());
     }
 
+    @Transactional
     public ProductManagerListRes listManager() {
         List<ProductManager> resultManager = productManagerRepository.findAll();
         List<ProductManagerReadRes> productManagerReadResList = new ArrayList<>();
@@ -92,7 +93,7 @@ public class ProductManagerService {
                 .build();
     }
 
-
+    @Transactional
     public ProductManagerReadRes2 readManager(Long idx) {
         Optional<ProductManager> resultManager = productManagerRepository.findById(idx);
 
@@ -127,7 +128,6 @@ public class ProductManagerService {
                     .result(productManagerReadRes)
                     .build();
         }
-
         return null;
     }
 
