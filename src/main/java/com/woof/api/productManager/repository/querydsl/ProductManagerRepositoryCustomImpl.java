@@ -5,13 +5,16 @@ import com.woof.api.productManager.model.ProductManager;
 import com.woof.api.productManager.model.ProductManagerImage;
 import com.woof.api.productManager.model.QProductManager;
 import com.woof.api.productManager.model.QProductManagerImage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductManagerRepositoryCustomImpl extends QuerydslRepositorySupport implements ProductManagerRepositoryCustom {
-    public ProductManagerRepositoryCustomImpl(Class<?> domainClass) {
+
+
+    public ProductManagerRepositoryCustomImpl() {
         super(ProductManager.class);
     }
 
