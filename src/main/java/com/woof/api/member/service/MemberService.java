@@ -5,6 +5,7 @@ import com.woof.api.member.model.requestdto.GetEmailConfirmReq;
 import com.woof.api.member.model.requestdto.PostMemberSignupReq;
 import com.woof.api.member.model.responsedto.PostMemberSignupRes;
 import com.woof.api.member.repository.MemberRepository;
+import com.woof.api.orders.model.Orders;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,29 +31,49 @@ public class MemberService implements UserDetailsService {
 
     // create
     public PostMemberSignupRes signup(PostMemberSignupReq postMemberSignupReq){
+
+        Optional<Member> duplicatedMember = memberRepository.findByEmail(postMemberSignupReq.getEmail());
         // 멤버 정보를 빌드로 저장
-        Member member = Member.builder()
-                .email(postMemberSignupReq.getEmail())
-                .password(passwordEncoder.encode(postMemberSignupReq.getPassword()))
-                .nickname(postMemberSignupReq.getNickname())
-                .authority("ROLE_USER")
-                .status(false)
-                .build();
+        if(!duplicatedMember.isPresent()) {
 
-        memberRepository.save(member);
+            Member member = Member.builder()
+                    .email(postMemberSignupReq.getEmail())
+                    .password(passwordEncoder.encode(postMemberSignupReq.getPassword()))
+                    .nickname(postMemberSignupReq.getNickname())
+                    .authority("ROLE_USER")
+                    .status(false)
+                    .build();
 
-        Map<String, Long> result = new HashMap<>();
-        result.put("idx", member.getIdx());
+            memberRepository.save(member);
 
-        PostMemberSignupRes postMemberSignupRes = PostMemberSignupRes.builder()
-                .isSuccess(true)
-                .code(1000L)
-                .message("요청 성공.")
-                .result(result)
-                .success(true)
-                .build();
+            Map<String, Long> result = new HashMap<>();
+            result.put("idx", member.getIdx());
 
-        return postMemberSignupRes;
+            PostMemberSignupRes postMemberSignupRes = PostMemberSignupRes.builder()
+                    .isSuccess(true)
+                    .code(1000L)
+                    .message("요청 성공.")
+                    .result(result)
+                    .success(true)
+                    .build();
+
+            return postMemberSignupRes;
+
+        } else {
+
+            PostMemberSignupRes postMemberSignupRes = PostMemberSignupRes.builder()
+                    .isSuccess(false)
+                    .code(4000L)
+                    .message("요청 실패. 중복된 이메일입니다.")
+                    .result(null)
+                    .success(false)
+                    .build();
+
+            return postMemberSignupRes;
+
+        }
+
+
     }
 
     public Boolean getCheckEmail (GetEmailConfirmReq getEmailConfirmReq) {
