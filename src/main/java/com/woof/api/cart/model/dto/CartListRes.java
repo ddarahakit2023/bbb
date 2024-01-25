@@ -1,8 +1,8 @@
 package com.woof.api.cart.model.dto;
 
-import com.woof.api.productCeo.model.dto.ProductCeoReadRes;
 import lombok.Builder;
 import lombok.Data;
+import org.intellij.lang.annotations.Pattern;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Builder
-public class Orders { //예약어 때문에 orders로 했어용
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
