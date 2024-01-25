@@ -21,8 +21,13 @@ public class OrderDto {
     private String reservation_status; //예약 상태
     private String orderDetails;
 
-    private ProductManager productManager;
-    private ProductCeo productCeo;
-    private Member member;
+//    private ProductManager productManager;
+//    private ProductCeo productCeo;
+//    private Member member;
 
+    private Long productCeoIdx;
+
+    private Long productManagerIdx;
+
+    private Long memberIdx;
  }

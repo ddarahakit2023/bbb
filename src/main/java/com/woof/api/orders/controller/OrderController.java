@@ -18,7 +18,7 @@ public class OrderController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity create(OrderDto orderDto){
+    public ResponseEntity create(@RequestBody OrderDto orderDto){
         orderService.create(orderDto);
 
         return ResponseEntity.ok().body("예약에 성공하였습니다");
@@ -30,8 +30,8 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/read")
-    public ResponseEntity read(Long id){
-        return ResponseEntity.ok().body(orderService.read(id));
+    public ResponseEntity read(Long idx){
+        return ResponseEntity.ok().body(orderService.read(idx));
     }
 
 

@@ -26,15 +26,15 @@ public class OrderService {
                 Orders.builder()
                         .productCeo(
                                 ProductCeo.builder()
-                                        .idx(orderDto.getProductCeo().getIdx())
+                                        .idx(orderDto.getProductCeoIdx())
                                         .build())
                         .productManager(
                                 ProductManager.builder()
-                                        .idx(orderDto.getProductManager().getIdx())
+                                        .idx(orderDto.getProductManagerIdx())
                                         .build())
                         .member(
                                 Member.builder()
-                                        .idx(orderDto.getMember().getIdx())
+                                        .idx(orderDto.getMemberIdx())
                                         .build())
                         .phoneNumber(orderDto.getPhoneNumber())
                         .time(orderDto.getTime())
@@ -44,6 +44,7 @@ public class OrderService {
                         .build());
     }
 
+    
     public OrdersListRes list() {
         List<Orders> result = orderRepository.findAll();
         List<OrdersReadRes> orderDtos = new ArrayList<>();
@@ -72,8 +73,8 @@ public class OrderService {
 
     }
 
-    public OrdersReadRes2 read(Long id) {
-        Optional<Orders> result = orderRepository.findById(id);
+    public OrdersReadRes2 read(Long idx) {
+        Optional<Orders> result = orderRepository.findById(idx);
         List<OrdersReadRes2> orderDto2 = new ArrayList<>();
 
         if (result.isPresent()) {
@@ -114,7 +115,7 @@ public class OrderService {
         Optional<Orders> result = orderRepository.findById(ordersUpdateReq.getIdx());
         //오더 레포에서 id를 찾아 result에 저장한다
 
-        if(result.isPresent()) {
+        if (result.isPresent()) {
             //만약 result에 값이 있다면
             Orders orders = result.get();
             //orders에 result를 저장한다
@@ -122,12 +123,13 @@ public class OrderService {
 //            orders.setStatus(orderDto.getStatus());
             //orders의 status는 orderDto의 status를 찾아 가져온다
 
-            Orders orders1 = Orders.builder()
-                    .idx(ordersUpdateReq.getIdx())
-                    .time(ordersUpdateReq.getTime())
-                    .build();
+//            Orders orders1 = Orders.builder()
+//                    .idx(ordersUpdateReq.getIdx())
+//                    .time(ordersUpdateReq.getTime())
+//                    .build();
+            orders.setTime(ordersUpdateReq.getTime());
 
-           orderRepository.save(orders1);
+            Orders result1 = orderRepository.save(orders);
             //order레포에 orders를 저장한다
 
             OrdersReadRes2 response = OrdersReadRes2.builder()
@@ -136,6 +138,10 @@ public class OrderService {
                     .success(true)
                     .isSuccess(true)
                     .result(OrdersReadRes.builder()
+                            .idx(result1.getIdx())
+                            .phoneNumber(result1.getPhoneNumber())
+                            .place(result1.getPlace())
+                            .time(result1.getTime())
                             .reservation_status("주문 수정에 성공하였습니다.")
                             .build())
                     .build();
@@ -143,7 +149,7 @@ public class OrderService {
 
             return response;
 
-        }else {
+        } else {
             return OrdersReadRes2.builder()
                     .code(400)
                     .message("요청 실패.")
@@ -165,12 +171,12 @@ public class OrderService {
                         .build());
 
         OrdersReadRes2 response2 = OrdersReadRes2.builder()
-                .code(400)
-                .message("요청 실패.")
+                .code(200)
+                .message("요청 성공.")
                 .success(false)
                 .isSuccess(false)
                 .result(OrdersReadRes.builder()
-                        .reservation_status("주문 삭제에 실패헀습니다")
+                        .reservation_status("주문 삭제에 성공했습니다")
                         .build())
                 .build();
 
