@@ -28,8 +28,7 @@ public class ProductManagerRepositoryCustomImpl extends QuerydslRepositorySuppor
 
         List<ProductManager> result = from(productManager)
                 .leftJoin(productManager.productManagerImages, productManagerImage).fetchJoin()
-                .where(productManager.idx.eq(productManager.idx))
-                .fetch().stream().distinct().collect(Collectors.toList());
+                .distinct().fetch();
 
 
 

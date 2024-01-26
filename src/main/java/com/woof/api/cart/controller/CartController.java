@@ -8,6 +8,7 @@ import com.woof.api.cart.service.CartService;
 import com.woof.api.common.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -38,4 +39,7 @@ public class CartController {
         cartService.cartRemove(idx);
         return ResponseEntity.ok().body("ok");
     }
+
+
+
 }
