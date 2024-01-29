@@ -15,6 +15,7 @@ import com.woof.api.productManager.model.dto.ProductManagerReadRes2;
 import com.woof.api.productManager.model.dto.ProductManagerUpdateReq;
 import com.woof.api.productManager.repository.ProductManagerImageRepository;
 import com.woof.api.productManager.repository.ProductManagerRepository;
+import com.woof.api.productManager.repository.querydsl.ProductManagerRepositoryCustomImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ProductManagerService {
     private final ProductManagerRepository productManagerRepository;
+    private final ProductManagerRepositoryCustomImpl productManagerRepositoryCustom;
     private final ProductManagerImageRepository productManagerImageRepository;
     private final AmazonS3 s3;
 
@@ -56,7 +58,7 @@ public class ProductManagerService {
 
     @Transactional
     public ProductManagerListRes listManager() {
-        List<ProductManager> resultManager = productManagerRepository.findAll();
+        List<ProductManager> resultManager = productManagerRepositoryCustom.findList();
         List<ProductManagerReadRes> productManagerReadResList = new ArrayList<>();
 
         for (ProductManager productManager : resultManager) {
