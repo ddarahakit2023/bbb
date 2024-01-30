@@ -63,7 +63,7 @@ public class ProductManagerController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/deleteManager")
-    public ResponseEntity deleteManager(Long idx) {
+    public ResponseEntity deleteManager(@RequestParam Long idx) {
         productManagerService.deleteManager(idx);
         return ResponseEntity.ok().body("삭제");
 
