@@ -8,10 +8,11 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductManagerRepositoryCustom {
     public List<ProductManager> findList();
 
-
+    public Optional<ProductManager> findList2(Long idx);
 }

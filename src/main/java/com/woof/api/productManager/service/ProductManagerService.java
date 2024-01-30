@@ -97,7 +97,7 @@ public class ProductManagerService {
 
     @Transactional
     public ProductManagerReadRes2 readManager(Long idx) {
-        Optional<ProductManager> resultManager = productManagerRepository.findById(idx);
+        Optional<ProductManager> resultManager = productManagerRepositoryCustom.findList2(idx);
 
         if (resultManager.isPresent()) {
             ProductManager productManager = resultManager.get();
