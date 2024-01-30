@@ -111,7 +111,7 @@ public class ProductCeoService {
 
             ProductCeoReadRes productCeoReadRes = ProductCeoReadRes.builder()
                     .idx(productCeo.getIdx())
-                    .productName(productCeo.getStoreName())
+                    .productName(productCeo.getProductName())
                     .storeName(productCeo.getStoreName())
                     .phoneNumber(productCeo.getPhoneNumber())
                     .price(productCeo.getPrice())
