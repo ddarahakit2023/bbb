@@ -3,8 +3,10 @@ package com.woof.api.productCeo.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 //import com.woof.api.member.model.entity.Member;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.woof.api.productCeo.model.ProductCeo;
 import com.woof.api.productCeo.model.ProductCeoImage;
+import com.woof.api.productCeo.model.QProductCeoImage;
 import com.woof.api.productCeo.model.dto.ProductCeoCreateReq;
 import com.woof.api.productCeo.model.dto.ProductCeoListRes;
 import com.woof.api.productCeo.model.dto.ProductCeoReadRes;
@@ -17,6 +19,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
@@ -144,24 +148,18 @@ public class ProductCeoService {
         }
     }
 
+    @PersistenceContext
+    private EntityManager em;
     @Transactional
     public void deleteCeo(Long idx) {
-        List<ProductCeoImage> all = productCeoImageRepository.findAllByProductCeoIdx(idx);
-        List<ProductCeoImage> aa = new ArrayList<>();
-        for (ProductCeoImage productCeoImage : all) {
-            ProductCeoImage result = ProductCeoImage.builder()
-                    .idx(productCeoImage.getIdx())
-                    .build();
-            aa.add(result);
-        }
+        // ProductCeoImage를 한 번에 삭제
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QProductCeoImage qProductCeoImage = QProductCeoImage.productCeoImage;
+        queryFactory.delete(qProductCeoImage).where(qProductCeoImage.productCeo.idx.eq(idx)).execute();
 
-        for (ProductCeoImage productCeoImage : aa) {
-            productCeoImageRepository.delete(productCeoImage);
-        }
-
+        // ProductCeo 삭제
         productCeoRepository.delete(ProductCeo.builder().idx(idx).build());
     }
-
 
     public String makeFolderCeo() {
         String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
