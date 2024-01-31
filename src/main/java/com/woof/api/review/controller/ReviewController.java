@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/review")
+@CrossOrigin("*")
 public class ReviewController {
     ReviewService reviewService;
 
@@ -19,7 +20,7 @@ public class ReviewController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity create(@RequestBody ReviewDto reviewDto) {
+    public ResponseEntity create(ReviewDto reviewDto) {
         ReviewResDto reviewResDto = reviewService.create(reviewDto);
         return ResponseEntity.ok().body(reviewResDto);
     }
