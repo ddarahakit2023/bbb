@@ -91,7 +91,7 @@ Member는 Cart기능을 통해 즐겨찾기를 할 수 있고, Orders 기능을 
 
 
 ## 기능 명세서
-swagger-ui
+[swagger-ui](http://192.168.0.100:8080/swagger-ui/#/)
 
 
 
