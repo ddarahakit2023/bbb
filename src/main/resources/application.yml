@@ -8,7 +8,8 @@ jwt:
 imp:
   imp_key: ${IAMPORT_KEY}
   imp_secret: ${IAMPORT_SECRET}
-
+server:
+  port: 8081
 
 spring:
   mvc:
