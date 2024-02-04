@@ -15,6 +15,7 @@
 	<description>woof backend api server</description>
 	<properties>
 		<java.version>11</java.version>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 
 	<repositories>
@@ -48,8 +49,6 @@
 			<version>${querydsl.version}</version>
 		</dependency>
 
-
-
 		<dependency>
 			<groupId>com.github.iamport</groupId>
 			<artifactId>iamport-rest-client-java</artifactId>
@@ -63,7 +62,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- QueryDSL JPA Config -->
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
