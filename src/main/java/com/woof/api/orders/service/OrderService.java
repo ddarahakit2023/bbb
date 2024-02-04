@@ -32,8 +32,8 @@ public class OrderService {
                 Orders.builder()
                         .productCeo(
                                 ProductCeo.builder()
-                                        .idx(orderDto.getProductCeo().getIdx())
-                                        .contents(orderDto.getProductCeo().getContents())
+                                        .idx(orderDto.getProductCeoIdx())
+                                        .productName(orderDto.getProductName())
                                         .build())
                         .productManager(
                                 ProductManager.builder()
