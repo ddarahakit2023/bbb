@@ -22,6 +22,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
+    private String name;
     private Long phoneNumber; //예약자 전화번호
     private Integer time; //예약시간
     private String place;//픽업 장소

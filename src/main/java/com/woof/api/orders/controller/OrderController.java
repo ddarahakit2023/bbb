@@ -2,17 +2,21 @@ package com.woof.api.orders.controller;
 
 
 import com.woof.api.orders.model.Orders;
-import com.woof.api.orders.model.dto.OrderDto;
-import com.woof.api.orders.model.dto.OrdersReadRes2;
-import com.woof.api.orders.model.dto.OrdersUpdateReq;
+import com.woof.api.orders.model.dto.*;
 import com.woof.api.orders.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.nio.file.attribute.UserPrincipal;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/orders")
+@CrossOrigin("*")
 public class OrderController {
     private final OrderService orderService;
 
@@ -45,8 +49,6 @@ public class OrderController {
         return ResponseEntity.ok().body(result);
     }
 
-
-
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
     public ResponseEntity delete(Long idx){
         orderService.delete(idx);
@@ -56,6 +58,12 @@ public class OrderController {
 
 
 
+    @RequestMapping(method = RequestMethod.GET, value = "/mylist")
+    public ResponseEntity<?> myList() {
+        List<OrdersMyList> myList = this.orderService.getMyList();
+        return ResponseEntity.ok()
+                .body(new MyListRes("나의 주문내역 불러오기를 성공했습니다", myList));
+    }
 
 
 }

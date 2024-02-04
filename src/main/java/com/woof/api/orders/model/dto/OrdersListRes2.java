@@ -1,18 +1,16 @@
 package com.woof.api.orders.model.dto;
 
-
 import lombok.Builder;
 import lombok.Data;
-
-import javax.persistence.Entity;
+import lombok.Getter;
 
 @Builder
 @Data
-public class OrdersUpdateReq {
+@Getter
+public class OrdersListRes2 {
     private Long idx;
-
+    private String name;
+    private Long phoneNumber;
     private Integer time;
     private String place;
-    private String orderDetails;
-
 }

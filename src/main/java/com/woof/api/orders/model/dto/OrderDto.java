@@ -13,7 +13,7 @@ import lombok.*;
 @Builder
 @Data
 public class OrderDto {
-
+    private String name;
     private Long phoneNumber; //예약자 전화번호
     private Integer time; //예약시간
     private String place;//픽업 장소
@@ -21,11 +21,12 @@ public class OrderDto {
     private String orderDetails;
 
 //    private ProductManager productManager;
-//    private ProductCeo productCeo;
+    private ProductCeo productCeo;
 //    private Member member;
 
     private Long productManagerIdx;
-    private Long productCeoIdx;
+//    private Long productCeoIdx;
     private Long memberIdx;
+
 
  }

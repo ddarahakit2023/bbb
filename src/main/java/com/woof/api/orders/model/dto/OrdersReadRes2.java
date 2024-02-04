@@ -12,4 +12,6 @@ public class OrdersReadRes2 {
     private String message;
     private OrdersReadRes result;
     private Boolean success;
+
+
 }
