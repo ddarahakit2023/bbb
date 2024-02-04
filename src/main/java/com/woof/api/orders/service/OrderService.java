@@ -7,12 +7,16 @@ import com.woof.api.orders.repository.OrderRepository;
 import com.woof.api.productCeo.model.ProductCeo;
 import com.woof.api.productManager.model.ProductManager;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 ;
 
@@ -21,12 +25,15 @@ import java.util.Optional;
 public class OrderService {
     private final OrderRepository orderRepository;
 
+
     public void create(OrderDto orderDto) {
+
         orderRepository.save(
                 Orders.builder()
                         .productCeo(
                                 ProductCeo.builder()
                                         .idx(orderDto.getProductCeoIdx())
+                                        .productName(orderDto.getProductName())
                                         .build())
                         .productManager(
                                 ProductManager.builder()
@@ -36,14 +43,15 @@ public class OrderService {
                                 Member.builder()
                                         .idx(orderDto.getMemberIdx())
                                         .build())
+                        .name(orderDto.getName())
                         .phoneNumber(orderDto.getPhoneNumber())
                         .time(orderDto.getTime())
                         .orderDetails(orderDto.getOrderDetails())
                         .place(orderDto.getPlace())
-                        .reservation_status(orderDto.getReservation_status())
+//                        .reservation_status(orderDto.getReservation_status())
                         .build());
     }
-
+//
     public OrdersListRes list() {
         List<Orders> result = orderRepository.findAll();
         List<OrdersReadRes> orderDtos = new ArrayList<>();
@@ -54,10 +62,11 @@ public class OrderService {
 
             OrdersReadRes ordersReadRes1 = OrdersReadRes.builder()
                     .idx(orders.getIdx())
+                    .name(orders.getName())
                     .place(orders.getPlace())
                     .time(orders.getTime())
                     .phoneNumber(orders.getPhoneNumber())
-                    .reservation_status(orders.getReservation_status())
+//                    .reservation_status(orders.getReservation_status())
                     .build();
 
             orderDtos.add(ordersReadRes1);
@@ -82,6 +91,7 @@ public class OrderService {
 
             OrdersReadRes ordersReadRes = OrdersReadRes.builder()
                     .idx(orders.getIdx())
+                    .name(orders.getName())
                     .phoneNumber(orders.getPhoneNumber())
                     .time(orders.getTime())
                     .place(orders.getPlace())
@@ -127,6 +137,8 @@ public class OrderService {
 //                    .time(ordersUpdateReq.getTime())
 //                    .build();
             orders.setTime(ordersUpdateReq.getTime());
+            orders.setOrderDetails(ordersUpdateReq.getOrderDetails());
+            orders.setPlace(ordersUpdateReq.getPlace());
 
             Orders result1 = orderRepository.save(orders);
             //order레포에 orders를 저장한다
@@ -169,17 +181,35 @@ public class OrderService {
                         .idx(idx)
                         .build());
 
-//        OrdersReadRes2 response2 = OrdersReadRes2.builder()
-//                .code(400)
-//                .message("요청 실패.")
-//                .success(false)
-//                .isSuccess(false)
-//                .result(OrdersReadRes.builder()
-//                        .reservation_status("주문 삭제에 실패헀습니다")
-//                        .build())
-//                .build();
-
-        return ;
     }
+
+
+    public List<OrdersMyList> getMyList() {
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Orders> orders = this.orderRepository.findAll();
+
+        List<OrdersMyList> myList = new ArrayList<>();
+        for (Orders order : orders) {
+            Long idx = order.getIdx();
+            Integer time = order.getTime();
+            String place = order.getPlace();
+            OrdersMyList userOrder = new OrdersMyList(idx, time, place );
+            myList.add(userOrder);
+        }
+
+//        Long idx = order.getIdx();
+//        Integer time = order.getTime();
+//        String place = order.getPlace();
+//        String details = order.getOrderDetails();
+//        Long productManagerIdx =order.getProductManager().getIdx();
+//        Long productCeoIdx = order.getProductCeo().getIdx();
+//        String productsContents= order.getProductCeo().getContents();
+//        Long memberIdx=order.getMember().getIdx();
+
+        return myList;
+    }
+
+
+
 
 }
