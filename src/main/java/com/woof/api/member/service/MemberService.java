@@ -120,11 +120,13 @@ public class MemberService implements UserDetailsService {
             Member member = result.get();
 
             member.setNickname(request.getNickname());
+            member.setPassword(request.getPassword());
 
             Member updateMember = memberRepository.save(member);
 
             PatchMemberUpdateRes response = PatchMemberUpdateRes.builder()
                     .nickname(updateMember.getNickname())
+                    .password(updateMember.getPassword())
                     .build();
             return response;
         } else {
