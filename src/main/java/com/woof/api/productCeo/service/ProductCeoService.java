@@ -15,6 +15,7 @@ import com.woof.api.productCeo.model.dto.ProductCeoReadRes2;
 import com.woof.api.productCeo.model.dto.ProductCeoUpdateReq;
 import com.woof.api.productCeo.repository.ProductCeoImageRepository;
 import com.woof.api.productCeo.repository.ProductCeoRepository;
+import com.woof.api.productCeo.repository.querydsl.ProductCeoRepositoryCustomImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,7 @@ import java.util.UUID;
 public class ProductCeoService {
     private final ProductCeoRepository productCeoRepository;
     private final ProductCeoImageRepository productCeoImageRepository;
+    private final ProductCeoRepositoryCustomImpl productCeoRepositoryCustom;
     private final AmazonS3 s3;
 
     @Value("${cloud.aws.s3.bucket}")
@@ -57,7 +59,7 @@ public class ProductCeoService {
 
     @Transactional
     public ProductCeoListRes listCeo() {
-        List<ProductCeo> result = productCeoRepository.findAll();
+        List<ProductCeo> result = productCeoRepositoryCustom.findList();
 
 //        List<ProductCeoImage> all = productCeoImageRepository.findAll();
 
@@ -99,7 +101,7 @@ public class ProductCeoService {
     }
     @Transactional
     public ProductCeoReadRes2 readCeo(Long idx) {
-        Optional<ProductCeo> resultCeo = productCeoRepository.findById(idx);
+        Optional<ProductCeo> resultCeo = productCeoRepositoryCustom.findList2(idx);
 
         if (resultCeo.isPresent()) {
             ProductCeo productCeo = resultCeo.get();

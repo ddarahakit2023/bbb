@@ -4,6 +4,7 @@ package com.woof.api.cart.service;
 import com.woof.api.cart.model.Cart;
 import com.woof.api.cart.model.dto.*;
 import com.woof.api.cart.repository.CartRepository;
+import com.woof.api.cart.repository.querydsl.CartRepositoryCustomImpl;
 import com.woof.api.common.Response;
 import com.woof.api.member.model.entity.Member;
 import com.woof.api.member.repository.MemberRepository;
@@ -23,6 +24,9 @@ import java.util.*;
 public class CartService {
 
     private final CartRepository cartRepository;
+    private final CartRepositoryCustomImpl cartRepositoryCustomImpl;
+
+
 
     // TODO: 에러코드 수정
     public Response cartIn(CartCreateReq request) {
@@ -60,7 +64,7 @@ public class CartService {
 
 //     즐겨찾기 목록 조회
     public List<CartListRes> cartList(Long memberIdx) {
-        List<Cart> result = cartRepository.findAllByMemberIdx(memberIdx);
+        List<Cart> result = cartRepositoryCustomImpl.findList(memberIdx);
         List<CartListRes> list = new ArrayList<>();
 
         for (Cart cart : result) {
