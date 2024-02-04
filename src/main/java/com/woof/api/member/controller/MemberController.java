@@ -15,8 +15,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.persistence.ColumnResult;
+
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class MemberController {
 
     private final ManagerService managerService;
