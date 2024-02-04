@@ -2,6 +2,7 @@ package com.woof.api.productManager.repository.querydsl;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import com.woof.api.productManager.model.ProductManager;
+
 import com.woof.api.productManager.model.QProductManager;
 import com.woof.api.productManager.model.QProductManagerImage;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;

@@ -9,6 +9,7 @@ import lombok.Getter;
 @Getter
 public class OrdersReadRes {
     private Long idx;
+    private String name;
     private Long phoneNumber;
     private Integer time;
     private String place;
