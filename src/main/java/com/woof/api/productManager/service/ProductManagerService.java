@@ -2,10 +2,12 @@ package com.woof.api.productManager.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.woof.api.productCeo.model.ProductCeo;
 import com.woof.api.productCeo.model.ProductCeoImage;
 import com.woof.api.productCeo.model.dto.ProductCeoReadRes;
 import com.woof.api.productCeo.model.dto.ProductCeoReadRes2;
+import com.woof.api.productManager.model.QProductManagerImage;
 import com.woof.api.productManager.model.dto.ProductManagerCreateReq;
 import com.woof.api.productManager.model.ProductManager;
 import com.woof.api.productManager.model.ProductManagerImage;
@@ -15,11 +17,14 @@ import com.woof.api.productManager.model.dto.ProductManagerReadRes2;
 import com.woof.api.productManager.model.dto.ProductManagerUpdateReq;
 import com.woof.api.productManager.repository.ProductManagerImageRepository;
 import com.woof.api.productManager.repository.ProductManagerRepository;
+import com.woof.api.productManager.repository.querydsl.ProductManagerRepositoryCustomImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +40,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ProductManagerService {
     private final ProductManagerRepository productManagerRepository;
+    private final ProductManagerRepositoryCustomImpl productManagerRepositoryCustom;
     private final ProductManagerImageRepository productManagerImageRepository;
     private final AmazonS3 s3;
 
@@ -46,7 +52,7 @@ public class ProductManagerService {
 
         return productManagerRepository.save(ProductManager.builder()
                 .idx(productManagerCreateReq.getIdx())
-                .gender(productManagerCreateReq.getManagerName())
+                .gender(productManagerCreateReq.getGender())
                 .phoneNumber(productManagerCreateReq.getPhoneNumber())
                 .managerName(productManagerCreateReq.getManagerName())
                 .price(productManagerCreateReq.getPrice())
@@ -54,8 +60,9 @@ public class ProductManagerService {
                 .build());
     }
 
+    @Transactional
     public ProductManagerListRes listManager() {
-        List<ProductManager> resultManager = productManagerRepository.findAll();
+        List<ProductManager> resultManager = productManagerRepositoryCustom.findList();
         List<ProductManagerReadRes> productManagerReadResList = new ArrayList<>();
 
         for (ProductManager productManager : resultManager) {
@@ -92,9 +99,9 @@ public class ProductManagerService {
                 .build();
     }
 
-
+    @Transactional
     public ProductManagerReadRes2 readManager(Long idx) {
-        Optional<ProductManager> resultManager = productManagerRepository.findById(idx);
+        Optional<ProductManager> resultManager = productManagerRepositoryCustom.findList2(idx);
 
         if (resultManager.isPresent()) {
             ProductManager productManager = resultManager.get();
@@ -127,7 +134,6 @@ public class ProductManagerService {
                     .result(productManagerReadRes)
                     .build();
         }
-
         return null;
     }
 
@@ -145,21 +151,16 @@ public class ProductManagerService {
         }
     }
 
+    @PersistenceContext
+    private EntityManager em;
     @Transactional
     public void deleteManager(Long idx) {
-        List<ProductManagerImage> all = productManagerImageRepository.findAllByProductManagerIdx(idx);
-        List<ProductManagerImage> aa = new ArrayList<>();
-        for (ProductManagerImage productManagerImage : all) {
-            ProductManagerImage result = ProductManagerImage.builder()
-                    .idx(productManagerImage.getIdx())
-                    .build();
-            aa.add(result);
-        }
+        // ProductManagerImage를 한 번에 삭제
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QProductManagerImage qProductManagerImage = QProductManagerImage.productManagerImage;
+        queryFactory.delete(qProductManagerImage).where(qProductManagerImage.productManager.idx.eq(idx)).execute();
 
-        for (ProductManagerImage productManagerImage : aa) {
-            productManagerImageRepository.delete(productManagerImage);
-        }
-
+        // ProductManager 삭제
         productManagerRepository.delete(ProductManager.builder().idx(idx).build());
     }
 

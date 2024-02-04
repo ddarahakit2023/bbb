@@ -1,11 +1,11 @@
 package com.woof.api.orders.service;
 
+import com.woof.api.member.model.entity.Member;
 import com.woof.api.orders.model.Orders;
-import com.woof.api.orders.model.dto.OrdersListRes;
-import com.woof.api.orders.model.dto.OrdersReadRes;
-import com.woof.api.orders.model.dto.OrdersReadRes2;
-import com.woof.api.orders.model.dto.OrdersUpdateReq;
+import com.woof.api.orders.model.dto.*;
 import com.woof.api.orders.repository.OrderRepository;
+import com.woof.api.productCeo.model.ProductCeo;
+import com.woof.api.productManager.model.ProductManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,21 +21,34 @@ import java.util.Optional;
 public class OrderService {
     private final OrderRepository orderRepository;
 
-    public void create(Orders orders) {
-        orderRepository.save(Orders.builder()
-                .phoneNumber(orders.getPhoneNumber())
-                .time(orders.getTime())
-                .orderDetails(orders.getOrderDetails())
-                .place(orders.getPlace())
-                .reservation_status(orders.getReservation_status())
-                .build());
+    public void create(OrderDto orderDto) {
+        orderRepository.save(
+                Orders.builder()
+                        .productCeo(
+                                ProductCeo.builder()
+                                        .idx(orderDto.getProductCeoIdx())
+                                        .build())
+                        .productManager(
+                                ProductManager.builder()
+                                        .idx(orderDto.getProductManagerIdx())
+                                        .build())
+                        .member(
+                                Member.builder()
+                                        .idx(orderDto.getMemberIdx())
+                                        .build())
+                        .phoneNumber(orderDto.getPhoneNumber())
+                        .time(orderDto.getTime())
+                        .orderDetails(orderDto.getOrderDetails())
+                        .place(orderDto.getPlace())
+                        .reservation_status(orderDto.getReservation_status())
+                        .build());
     }
 
     public OrdersListRes list() {
         List<Orders> result = orderRepository.findAll();
         List<OrdersReadRes> orderDtos = new ArrayList<>();
 
-        for (Orders orders:result) {
+        for (Orders orders : result) {
 
             List<OrdersReadRes> ordersReadRes = new ArrayList<>();
 
@@ -101,7 +114,7 @@ public class OrderService {
         Optional<Orders> result = orderRepository.findById(ordersUpdateReq.getIdx());
         //오더 레포에서 id를 찾아 result에 저장한다
 
-        if(result.isPresent()) {
+        if (result.isPresent()) {
             //만약 result에 값이 있다면
             Orders orders = result.get();
             //orders에 result를 저장한다
@@ -109,12 +122,13 @@ public class OrderService {
 //            orders.setStatus(orderDto.getStatus());
             //orders의 status는 orderDto의 status를 찾아 가져온다
 
-            Orders orders1 = Orders.builder()
-                    .idx(ordersUpdateReq.getIdx())
-                    .time(ordersUpdateReq.getTime())
-                    .build();
+//            Orders orders1 = Orders.builder()
+//                    .idx(ordersUpdateReq.getIdx())
+//                    .time(ordersUpdateReq.getTime())
+//                    .build();
+            orders.setTime(ordersUpdateReq.getTime());
 
-           orderRepository.save(orders1);
+            Orders result1 = orderRepository.save(orders);
             //order레포에 orders를 저장한다
 
             OrdersReadRes2 response = OrdersReadRes2.builder()
@@ -123,6 +137,10 @@ public class OrderService {
                     .success(true)
                     .isSuccess(true)
                     .result(OrdersReadRes.builder()
+                            .idx(result1.getIdx())
+                            .phoneNumber(result1.getPhoneNumber())
+                            .place(result1.getPlace())
+                            .time(result1.getTime())
                             .reservation_status("주문 수정에 성공하였습니다.")
                             .build())
                     .build();
@@ -130,7 +148,7 @@ public class OrderService {
 
             return response;
 
-        }else {
+        } else {
             return OrdersReadRes2.builder()
                     .code(400)
                     .message("요청 실패.")
@@ -145,23 +163,23 @@ public class OrderService {
     }
 
     @Transactional
-    public OrdersReadRes2 delete(Long idx) {
+    public void delete(Long idx) {
         orderRepository.delete(
                 Orders.builder()
                         .idx(idx)
                         .build());
 
-        OrdersReadRes2 response2 = OrdersReadRes2.builder()
-                .code(400)
-                .message("요청 실패.")
-                .success(false)
-                .isSuccess(false)
-                .result(OrdersReadRes.builder()
-                        .reservation_status("주문 삭제에 실패헀습니다")
-                        .build())
-                .build();
+//        OrdersReadRes2 response2 = OrdersReadRes2.builder()
+//                .code(400)
+//                .message("요청 실패.")
+//                .success(false)
+//                .isSuccess(false)
+//                .result(OrdersReadRes.builder()
+//                        .reservation_status("주문 삭제에 실패헀습니다")
+//                        .build())
+//                .build();
 
-        return response2;
+        return ;
     }
 
 }

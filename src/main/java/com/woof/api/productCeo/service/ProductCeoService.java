@@ -3,8 +3,10 @@ package com.woof.api.productCeo.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 //import com.woof.api.member.model.entity.Member;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.woof.api.productCeo.model.ProductCeo;
 import com.woof.api.productCeo.model.ProductCeoImage;
+import com.woof.api.productCeo.model.QProductCeoImage;
 import com.woof.api.productCeo.model.dto.ProductCeoCreateReq;
 import com.woof.api.productCeo.model.dto.ProductCeoListRes;
 import com.woof.api.productCeo.model.dto.ProductCeoReadRes;
@@ -12,11 +14,14 @@ import com.woof.api.productCeo.model.dto.ProductCeoReadRes2;
 import com.woof.api.productCeo.model.dto.ProductCeoUpdateReq;
 import com.woof.api.productCeo.repository.ProductCeoImageRepository;
 import com.woof.api.productCeo.repository.ProductCeoRepository;
+import com.woof.api.productCeo.repository.querydsl.ProductCeoRepositoryCustomImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +38,7 @@ import java.util.UUID;
 public class ProductCeoService {
     private final ProductCeoRepository productCeoRepository;
     private final ProductCeoImageRepository productCeoImageRepository;
+    private final ProductCeoRepositoryCustomImpl productCeoRepositoryCustom;
     private final AmazonS3 s3;
 
     @Value("${cloud.aws.s3.bucket}")
@@ -50,10 +56,14 @@ public class ProductCeoService {
                 .build());
     }
 
+    @Transactional
     public ProductCeoListRes listCeo() {
-        List<ProductCeo> result = productCeoRepository.findAll();
+        List<ProductCeo> result = productCeoRepositoryCustom.findList();
+
+//        List<ProductCeoImage> all = productCeoImageRepository.findAll();
 
         List<ProductCeoReadRes> productCeoReadResList = new ArrayList<>();
+
 
         for (ProductCeo productCeo : result) {
             List<ProductCeoImage> productCeoImages = productCeo.getProductCeoImages();
@@ -88,9 +98,9 @@ public class ProductCeoService {
                 .result(productCeoReadResList)
                 .build();
     }
-
+    @Transactional
     public ProductCeoReadRes2 readCeo(Long idx) {
-        Optional<ProductCeo> resultCeo = productCeoRepository.findById(idx);
+        Optional<ProductCeo> resultCeo = productCeoRepositoryCustom.findList2(idx);
 
         if (resultCeo.isPresent()) {
             ProductCeo productCeo = resultCeo.get();
@@ -107,7 +117,7 @@ public class ProductCeoService {
 
             ProductCeoReadRes productCeoReadRes = ProductCeoReadRes.builder()
                     .idx(productCeo.getIdx())
-                    .productName(productCeo.getStoreName())
+                    .productName(productCeo.getProductName())
                     .storeName(productCeo.getStoreName())
                     .phoneNumber(productCeo.getPhoneNumber())
                     .price(productCeo.getPrice())
@@ -123,7 +133,6 @@ public class ProductCeoService {
                     .result(productCeoReadRes)
                     .build();
         }
-
         return null;
     }
 
@@ -141,24 +150,18 @@ public class ProductCeoService {
         }
     }
 
+    @PersistenceContext
+    private EntityManager em;
     @Transactional
     public void deleteCeo(Long idx) {
-        List<ProductCeoImage> all = productCeoImageRepository.findAllByProductCeoIdx(idx);
-        List<ProductCeoImage> aa = new ArrayList<>();
-        for (ProductCeoImage productCeoImage : all) {
-            ProductCeoImage result = ProductCeoImage.builder()
-                    .idx(productCeoImage.getIdx())
-                    .build();
-            aa.add(result);
-        }
+        // ProductCeoImage를 한 번에 삭제
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QProductCeoImage qProductCeoImage = QProductCeoImage.productCeoImage;
+        queryFactory.delete(qProductCeoImage).where(qProductCeoImage.productCeo.idx.eq(idx)).execute();
 
-        for (ProductCeoImage productCeoImage : aa) {
-            productCeoImageRepository.delete(productCeoImage);
-        }
-
+        // ProductCeo 삭제
         productCeoRepository.delete(ProductCeo.builder().idx(idx).build());
     }
-
 
     public String makeFolderCeo() {
         String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));

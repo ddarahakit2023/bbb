@@ -1,15 +1,16 @@
 package com.woof.api.member.model.entity;
 
+import com.woof.api.cart.model.Cart;
+import com.woof.api.orders.model.Orders;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,6 +28,12 @@ public class Member implements UserDetails {
     private String nickname;
     private String authority;
     private boolean status;
+
+    @OneToMany(mappedBy = "member")
+    List<Cart> carts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    List<Orders> orders = new ArrayList<>();
 
 
     @Override

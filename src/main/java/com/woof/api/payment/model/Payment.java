@@ -9,5 +9,5 @@ import javax.persistence.Id;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idx;
 }

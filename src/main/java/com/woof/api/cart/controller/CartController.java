@@ -3,10 +3,9 @@ package com.woof.api.cart.controller;
 
 
 
-import com.woof.api.cart.model.Cart;
+import com.woof.api.cart.model.dto.CartCreateReq;
 import com.woof.api.cart.service.CartService;
-import com.woof.api.member.model.entity.Member;
-import com.woof.api.productManager.model.ProductManager;
+import com.woof.api.common.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,24 +19,30 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
     private final CartService cartService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/in")
-    public ResponseEntity create(Long productCeoIdx, Long productManagerIdx, String email) {
 
-        cartService.cartIn(productCeoIdx, productManagerIdx, email);
-        return ResponseEntity.ok().body("ok");
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/in")
+    public ResponseEntity create(@RequestBody CartCreateReq cartCreateReq) {
+        Response response = cartService.cartIn(cartCreateReq);
+        return ResponseEntity.ok().body(response);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/cartlist")
-    public ResponseEntity<Object> cartList(/*@AuthenticationPrincipal*/ String email) {
+    public ResponseEntity<Object> cartList(Long memberIdx) {
 
-        return ResponseEntity.ok().body(cartService.cartList(email));
+        return ResponseEntity.ok().body(cartService.cartList(memberIdx));
     }
 
 
-    // Ceo랑 매니저 아이디 따로 해야하나?
+
     @RequestMapping(method = RequestMethod.DELETE, value = "/cartremove/{idx}")
     public ResponseEntity cartRemove(/*@AuthenticationPrincipal*/@PathVariable Long idx) {
+
         cartService.cartRemove(idx);
         return ResponseEntity.ok().body("ok");
     }
+
+
+
 }

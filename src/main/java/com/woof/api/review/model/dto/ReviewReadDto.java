@@ -10,5 +10,5 @@ public class ReviewReadDto
     private Long idx;
     private final String username;
     private final String text;
-    private final Integer productId;
+    private final Integer ordersIdx;
 }

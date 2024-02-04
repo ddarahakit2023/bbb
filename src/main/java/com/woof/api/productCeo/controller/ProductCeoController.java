@@ -60,7 +60,7 @@ public class ProductCeoController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/deleteCeo")
-    public ResponseEntity deleteCeo(Long idx) {
+    public ResponseEntity deleteCeo(@RequestParam Long idx) {
         productCeoService.deleteCeo(idx);
         return ResponseEntity.ok().body("삭제");
 

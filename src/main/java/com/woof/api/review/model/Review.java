@@ -32,11 +32,11 @@ public class Review {
     ProductCeo productCeo; //상품 : 리뷰 = 1 : N
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productManager_idx")
+    @JoinColumn(name = "productManagerIdx")
     ProductManager productManager; //상품 : 리뷰 = 1 : N
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orders_idx")
+    @JoinColumn(name = "ordersIdx")
     Orders orders; //주문 : 리뷰 = 1 : N
 
     @Builder

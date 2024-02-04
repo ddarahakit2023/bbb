@@ -1,5 +1,8 @@
 package com.woof.api.productCeo.model;
 
+import com.woof.api.cart.model.Cart;
+import com.woof.api.orders.model.Orders;
+import com.woof.api.review.model.Review;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,14 +25,18 @@ public class ProductCeo {
     private Integer price;
     private String contents;
 
-//    @OneToMany(mappedBy = "productCeo")
-//    private List<Orders> orders = new ArrayList<>();      합칠 때 활성화
+    @OneToMany(mappedBy = "productCeo")
+    private List<Orders> orders = new ArrayList<>();
+//    합칠 때 활성화
 
+    @OneToMany(mappedBy = "productCeo")
+    private List<Cart> carts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "productCeo", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "productCeo")
     private List<ProductCeoImage> productCeoImages = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "productCeo")
-//    private List<Review> reviews = new ArrayList<>();     합칠 때 활성화
+    @OneToMany(mappedBy = "productCeo")
+    private List<Review> reviews = new ArrayList<>();
+//    합칠 때 활성화
 
 }

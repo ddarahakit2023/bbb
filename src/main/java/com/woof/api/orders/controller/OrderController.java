@@ -2,6 +2,7 @@ package com.woof.api.orders.controller;
 
 
 import com.woof.api.orders.model.Orders;
+import com.woof.api.orders.model.dto.OrderDto;
 import com.woof.api.orders.model.dto.OrdersReadRes2;
 import com.woof.api.orders.model.dto.OrdersUpdateReq;
 import com.woof.api.orders.service.OrderService;
@@ -17,8 +18,8 @@ public class OrderController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity create(Orders orders){
-        orderService.create(orders);
+    public ResponseEntity create(@RequestBody OrderDto orderDto){
+        orderService.create(orderDto);
 
         return ResponseEntity.ok().body("예약에 성공하였습니다");
     }
@@ -29,8 +30,8 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/read")
-    public ResponseEntity read(Long id){
-        return ResponseEntity.ok().body(orderService.read(id));
+    public ResponseEntity read(Long idx){
+        return ResponseEntity.ok().body(orderService.read(idx));
     }
 
 
@@ -47,12 +48,10 @@ public class OrderController {
 
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
-    public ResponseEntity<OrdersReadRes2> delete(Long idx){
+    public ResponseEntity delete(Long idx){
         orderService.delete(idx);
 
-        OrdersReadRes2 result2 = orderService.delete(idx);
-
-        return ResponseEntity.ok().body(result2);
+        return ResponseEntity.ok().body("삭제를 성공했습니다.");
     }
 
 
