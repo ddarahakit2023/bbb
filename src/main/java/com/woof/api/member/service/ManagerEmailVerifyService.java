@@ -59,7 +59,8 @@ public class ManagerEmailVerifyService {
         create(email,uuid);
         // jwt 생성
         String jwt = TokenProvider.generateAccessToken(email,role);
-        message.setText("http://localhost:8080/managerconfirm?email=" + email + "&uuid=" + uuid + "&jwt=" + jwt);
+        message.setText("http://3.35.233.95:8080/managerconfirm?email=" + email + "&uuid=" + uuid + "&jwt=" + jwt);
+        // message.setText("http://localhost:8080/managerconfirm?email=" + email + "&uuid=" + uuid + "&jwt=" + jwt);
         emailSender.send(message);
     }
 
