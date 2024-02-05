@@ -10,4 +10,5 @@ import lombok.*;
 @Builder
 public class PostMemberLoginRes {
     String accessToken;
+    Long idx;
 }

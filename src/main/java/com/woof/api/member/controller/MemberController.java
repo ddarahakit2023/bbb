@@ -81,7 +81,7 @@ public class MemberController {
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         if(authentication.getPrincipal() != null) {
             Member member = (Member)authentication.getPrincipal();
-            return ResponseEntity.ok().body(PostMemberLoginRes.builder().accessToken(TokenProvider.generateAccessToken(member.getUsername(), "ROLE_MEMBER")).build());
+            return ResponseEntity.ok().body(PostMemberLoginRes.builder().accessToken(TokenProvider.generateAccessToken(member.getUsername(), "ROLE_MEMBER")).idx(member.getIdx()).build());
 
         }
 
