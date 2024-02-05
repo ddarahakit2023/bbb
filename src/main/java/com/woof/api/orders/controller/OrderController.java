@@ -58,7 +58,7 @@ public class OrderController {
 
     @GetMapping("/{memberIdx}")
     public ResponseEntity getOrders(@PathVariable Long memberIdx) {
-        List<Dk> orders = orderService.getOrdersByMemberIdx(memberIdx);
+        List<MyListRes> orders = orderService.getOrdersByMemberIdx(memberIdx);
         return ResponseEntity.ok().body(orders);
     }
 
