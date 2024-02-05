@@ -1,3 +1,5 @@
+server:
+  port: ${SERVER_PORT}
 
 jwt:
   secret-key: ${JWT_SECRET}
@@ -39,7 +41,7 @@ spring:
     open-in-view: false
     database: mysql
     hibernate:
-      ddl-auto: update
+      ddl-auto: ${DDL_AUTO_TYPE}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
