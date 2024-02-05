@@ -1,22 +1,17 @@
 package com.woof.api.orders.model.dto;
 
-import com.woof.api.orders.model.Orders;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @Data
+@Builder
 public class MyListRes {
-    private String message;
-    private Object data;
 
-    public MyListRes(String message, Object data) {
-        this.message = message;
-        this.data = data;
-    }
-
+    String name;
+    String place;
+    String phNum;
 }

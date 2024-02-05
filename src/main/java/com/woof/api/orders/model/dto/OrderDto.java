@@ -14,12 +14,12 @@ import lombok.*;
 @Data
 public class OrderDto {
     private String name;
-    private Long phoneNumber; //예약자 전화번호
+    private String phoneNumber; //예약자 전화번호
     private Integer time; //예약시간
     private String place;//픽업 장소
     private String reservationStatus; //예약 상태
     private String orderDetails;
-    private String productName;
+//    private String productName;
 
 //    private ProductManager productManager;
 //    private ProductCeo productCeo;
@@ -28,6 +28,8 @@ public class OrderDto {
     private Long productManagerIdx;
     private Long productCeoIdx;
     private Long memberIdx;
+
+
 
 
  }

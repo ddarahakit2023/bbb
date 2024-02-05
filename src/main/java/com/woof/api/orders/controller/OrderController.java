@@ -56,14 +56,12 @@ public class OrderController {
         return ResponseEntity.ok().body("삭제를 성공했습니다.");
     }
 
-
-
-    @RequestMapping(method = RequestMethod.GET, value = "/mylist")
-    public ResponseEntity<?> myList() {
-        List<OrdersMyList> myList = this.orderService.getMyList();
-        return ResponseEntity.ok()
-                .body(new MyListRes("나의 주문내역 불러오기를 성공했습니다", myList));
+    @GetMapping("/{memberIdx}")
+    public ResponseEntity getOrders(@PathVariable Long memberIdx) {
+        List<Dk> orders = orderService.getOrdersByMemberIdx(memberIdx);
+        return ResponseEntity.ok().body(orders);
     }
+
 
 
 }

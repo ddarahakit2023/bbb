@@ -23,7 +23,7 @@ public class Orders {
     private Long idx;
 
     private String name;
-    private Long phoneNumber; //예약자 전화번호
+    private String phoneNumber; //예약자 전화번호
     private Integer time; //예약시간
     private String place;//픽업 장소
     private String reservation_status; //예약 상태

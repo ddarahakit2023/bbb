@@ -7,16 +7,12 @@ import com.woof.api.orders.repository.OrderRepository;
 import com.woof.api.productCeo.model.ProductCeo;
 import com.woof.api.productManager.model.ProductManager;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 ;
 
@@ -26,14 +22,16 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
 
+    @Transactional
     public void create(OrderDto orderDto) {
+
 
         orderRepository.save(
                 Orders.builder()
                         .productCeo(
                                 ProductCeo.builder()
                                         .idx(orderDto.getProductCeoIdx())
-                                        .productName(orderDto.getProductName())
+//                                        .productName(orderDto.getProductName())
                                         .build())
                         .productManager(
                                 ProductManager.builder()
@@ -183,33 +181,18 @@ public class OrderService {
 
     }
 
-
-    public List<OrdersMyList> getMyList() {
-        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Orders> orders = this.orderRepository.findAll();
-
-        List<OrdersMyList> myList = new ArrayList<>();
-        for (Orders order : orders) {
-            Long idx = order.getIdx();
-            Integer time = order.getTime();
-            String place = order.getPlace();
-            OrdersMyList userOrder = new OrdersMyList(idx, time, place );
-            myList.add(userOrder);
+    public List<MyListRes> getOrdersByMemberIdx(Long memberIdx) {
+        List<Orders> byMemberIdx = orderRepository.findByMemberIdx(memberIdx);
+        List<MyListRes> MlRes = new ArrayList<>();
+        for (Orders order : byMemberIdx) {
+            MyListRes res = MyListRes.builder()
+                    .name(order.getName())
+                    .phNum(order.getPhoneNumber())
+                    .place(order.getPlace())
+                    .build();
+            MlRes.add(res);
         }
-
-//        Long idx = order.getIdx();
-//        Integer time = order.getTime();
-//        String place = order.getPlace();
-//        String details = order.getOrderDetails();
-//        Long productManagerIdx =order.getProductManager().getIdx();
-//        Long productCeoIdx = order.getProductCeo().getIdx();
-//        String productsContents= order.getProductCeo().getContents();
-//        Long memberIdx=order.getMember().getIdx();
-
-        return myList;
+        return MlRes;
     }
-
-
-
 
 }

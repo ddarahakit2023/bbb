@@ -10,7 +10,7 @@ import lombok.Getter;
 public class OrdersListRes2 {
     private Long idx;
     private String name;
-    private Long phoneNumber;
+    private String phoneNumber;
     private Integer time;
     private String place;
 }
