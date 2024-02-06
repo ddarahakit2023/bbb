@@ -20,7 +20,7 @@ public class ReviewController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity create(ReviewDto reviewDto) {
+    public ResponseEntity create(@RequestBody ReviewDto reviewDto) {
         ReviewResDto reviewResDto = reviewService.create(reviewDto);
         return ResponseEntity.ok().body(reviewResDto);
     }

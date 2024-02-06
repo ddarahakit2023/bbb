@@ -181,18 +181,20 @@ public class OrderService {
 
     }
 
-    public List<MyListRes> getOrdersByMemberIdx(Long memberIdx) {
+    public List<Dk> getOrdersByMemberIdx(Long memberIdx) {
         List<Orders> byMemberIdx = orderRepository.findByMemberIdx(memberIdx);
-        List<MyListRes> MlRes = new ArrayList<>();
+        List<Dk> dkRes = new ArrayList<>();
         for (Orders order : byMemberIdx) {
-            MyListRes res = MyListRes.builder()
+            Dk res = Dk.builder()
+                    .idx(order.getIdx())
                     .name(order.getName())
                     .phNum(order.getPhoneNumber())
+                    .orderDetails(order.getOrderDetails())
                     .place(order.getPlace())
                     .build();
-            MlRes.add(res);
+            dkRes.add(res);
         }
-        return MlRes;
+        return dkRes;
     }
 
 }
