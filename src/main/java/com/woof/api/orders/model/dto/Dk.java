@@ -9,9 +9,10 @@ import lombok.Setter;
 @Setter
 @Data
 @Builder
-public class MyListRes {
-
+public class Dk {
+    Long idx;
     String name;
     String place;
     String phNum;
+    String orderDetails;
 }
