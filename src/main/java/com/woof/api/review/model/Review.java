@@ -23,9 +23,10 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
-    private String username;
+
+    private String name;
     private String text;
-    private Integer productNumber;
+//    private Integer productNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productCeo_idx")
@@ -40,13 +41,13 @@ public class Review {
     Orders orders; //주문 : 리뷰 = 1 : N
 
     @Builder
-    public Review(Long idx, String username, String text, ProductCeo productCeo, Integer productNumber, ProductManager productManager, Orders orders ){
+    public Review(Long idx, String name, String text, ProductCeo productCeo, Integer productNumber, ProductManager productManager, Orders orders ){
         this.idx = idx;
-        this.username = username;
+        this.name = name;
         this.text = text;
         this.productCeo = productCeo;
         this.productManager = productManager;
-        this.productNumber = productNumber;
+//        this.productNumber = productNumber;
         this.orders = orders;
     }
 
