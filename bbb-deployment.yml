@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bbb-deployment
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      type: bbb
+  template:
+    metadata:
+      labels:
+        type: bbb
+    spec:
+      containers:
+        - name: bbb-container
+          image: ddarahakit2023/bbb:VERSION
+          ports:
+            - containerPort: 8080
+      terminationGracePeriodSeconds: 5
