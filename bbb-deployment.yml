@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: bbb-container
-          image: ddarahakit2023/bbb:VERSION
+          image: ddarahakit2023/bbb:1.VERSION
           ports:
             - containerPort: 8080
       terminationGracePeriodSeconds: 5
